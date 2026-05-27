@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://bjs2womoq4jlw"]
+
+[ext_resource type="PackedScene" uid="uid://b7hvhg2b6x6kq" path="res://Views/MainMenu/main_menu.tscn" id="1_8r4uk"]
+[ext_resource type="Script" uid="uid://bwh2i2ro6ycup" path="res://Views/main.gd" id="1_y1b1f"]
+[ext_resource type="PackedScene" uid="uid://b7r5m0iq0lsbh" path="res://Views/Maps/FootBall/football.tscn" id="2_s1q8p"]
+[ext_resource type="PackedScene" uid="uid://cc4i5w8g753o8" path="res://Networking/NetworkBase.tscn" id="3_3njbj"]
+[ext_resource type="PackedScene" uid="uid://psp4pothboyt" path="res://Views/winner.tscn" id="3_gyjml"]
+
+[node name="Main" type="Node" unique_id=978188097]
+script = ExtResource("1_y1b1f")
+match_scene = ExtResource("2_s1q8p")
+winner_scene = ExtResource("3_gyjml")
+menu_scene = ExtResource("1_8r4uk")
+
+[node name="MainMenu" parent="." unique_id=1497027322 instance=ExtResource("1_8r4uk")]
+
+[node name="NetworkBase" parent="." unique_id=1243494 instance=ExtResource("3_3njbj")]

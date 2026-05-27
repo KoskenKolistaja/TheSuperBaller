@@ -1,0 +1,14 @@
+1. Käynnistä tässä kansiossa CMD ja kirjoita "node server.js"
+
+2. Käynnistä tässä kansiossa PowerShell (Shift Right Click) ja kirjoita "python -m http.server 8000"
+
+
+
+
+1. Käynnistä start_server.bat
+
+2. Käynnistä Godotissa peli joka sisältää Network.gd scriptin
+
+3. Yhdistä kännyköillä Wi-fiin
+
+4. Mene kännyköillä osoitteeseen http://192.168.10.242:8000/controller.html

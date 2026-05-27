@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://bkkvduiq0rliw"]
+
+[ext_resource type="FontFile" uid="uid://d12q2lts1g6oo" path="res://Assets/Fonts/Melon Pop.otf" id="1_vv88l"]
+[ext_resource type="FontFile" uid="uid://b0cnucnamt1hi" path="res://Assets/Fonts/Super Crawler.ttf" id="2_j14dj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8n5c0"]
+albedo_color = Color(0.3328807, 0.33288068, 0.33288068, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vv88l"]
+material = SubResource("StandardMaterial3D_8n5c0")
+size = Vector3(2, 1, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vv88l"]
+shading_mode = 0
+albedo_color = Color(0.973535, 0.9735351, 0.973535, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_j14dj"]
+material = SubResource("StandardMaterial3D_vv88l")
+size = Vector3(1.8, 0.9, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j14dj"]
+albedo_color = Color(0.3328807, 0.33288068, 0.33288068, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_px5rj"]
+material = SubResource("StandardMaterial3D_j14dj")
+size = Vector3(1, 0.5, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fv432"]
+shading_mode = 0
+albedo_color = Color(0.973535, 0.9735351, 0.973535, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_in3h5"]
+material = SubResource("StandardMaterial3D_fv432")
+size = Vector3(0.9, 0.45, 0.2)
+
+[node name="PointTable" type="Node3D" unique_id=876854262]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="Points" type="Node3D" parent="." unique_id=19694061]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Points" unique_id=1594152517]
+mesh = SubResource("BoxMesh_vv88l")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Points" unique_id=1615599796]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.037203193)
+mesh = SubResource("BoxMesh_j14dj")
+
+[node name="Label3D" type="Label3D" parent="Points" unique_id=858105828]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.14706862)
+modulate = Color(0, 0, 0, 1)
+text = "0 - 0"
+font = ExtResource("1_vv88l")
+font_size = 114
+
+[node name="Time" type="Node3D" parent="." unique_id=1608327671]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8562069, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Time" unique_id=1550134321]
+mesh = SubResource("BoxMesh_px5rj")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Time" unique_id=1478848363]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.037203193)
+mesh = SubResource("BoxMesh_in3h5")
+
+[node name="Label3D" type="Label3D" parent="Time" unique_id=250601302]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.14706862)
+modulate = Color(0, 0, 0, 1)
+text = "1:56"
+font = ExtResource("2_j14dj")
+font_size = 50
+outline_size = 0

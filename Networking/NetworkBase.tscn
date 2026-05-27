@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://cc4i5w8g753o8"]
+
+[ext_resource type="Script" uid="uid://kymm1w40osk0" path="res://Networking/network.gd" id="1_tr5ul"]
+[ext_resource type="PackedScene" uid="uid://dxkq28rctwpdo" path="res://Networking/input_parser.tscn" id="2_tr5ul"]
+
+[node name="NetworkBase" type="Node" unique_id=1243494 node_paths=PackedStringArray("input_parser")]
+script = ExtResource("1_tr5ul")
+input_parser = NodePath("InputParser")
+
+[node name="InputParser" parent="." unique_id=822937112 instance=ExtResource("2_tr5ul")]

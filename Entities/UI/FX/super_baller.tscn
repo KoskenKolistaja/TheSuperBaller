@@ -1,0 +1,248 @@
+[gd_scene format=3 uid="uid://ctqtt0gcdqrpc"]
+
+[ext_resource type="Script" uid="uid://dswpqsbf10nsx" path="res://Entities/UI/FX/super_baller.gd" id="1_l0i3p"]
+[ext_resource type="FontFile" uid="uid://b0cnucnamt1hi" path="res://Assets/Fonts/Super Crawler.ttf" id="1_mhstx"]
+[ext_resource type="AudioStream" uid="uid://b2iien8n2ydy" path="res://Assets/SFX/SuperBaller.ogg" id="3_u2tix"]
+
+[sub_resource type="Animation" id="Animation_xm65n"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("WordContainer/Label:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("WordContainer/Label2:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("WordContainer/Label3:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("WordContainer/Label4:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("WordContainer/Label5:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_u2tix"]
+resource_name = "SuperBaller"
+length = 4.0
+tracks/0/type = "audio"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SuperBaller")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("3_u2tix")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/0/use_blend = true
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("WordContainer/Label:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.26),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("WordContainer/Label2:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.65),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("WordContainer/Label3:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1.19),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("WordContainer/Label4:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1.77),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("WordContainer/Label5:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 2.37),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xm65n"]
+_data = {
+&"RESET": SubResource("Animation_xm65n"),
+&"SuperBaller": SubResource("Animation_u2tix")
+}
+
+[node name="SuperBaller" type="Control" unique_id=226230835]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_l0i3p")
+
+[node name="WordContainer" type="HBoxContainer" parent="." unique_id=1142875013]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 19
+
+[node name="Label" type="Label" parent="WordContainer" unique_id=596523827]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.97474164, 0, 0.38930893, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 25
+theme_override_constants/shadow_offset_x = -8
+theme_override_constants/shadow_offset_y = 6
+theme_override_fonts/font = ExtResource("1_mhstx")
+theme_override_font_sizes/font_size = 100
+text = "WE"
+
+[node name="Label2" type="Label" parent="WordContainer" unique_id=648673007]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.97474164, 0, 0.38930893, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 25
+theme_override_constants/shadow_offset_x = -8
+theme_override_constants/shadow_offset_y = 6
+theme_override_fonts/font = ExtResource("1_mhstx")
+theme_override_font_sizes/font_size = 100
+text = "HAVE"
+
+[node name="Label3" type="Label" parent="WordContainer" unique_id=1372443579]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.97474164, 0, 0.38930893, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 25
+theme_override_constants/shadow_offset_x = -8
+theme_override_constants/shadow_offset_y = 6
+theme_override_fonts/font = ExtResource("1_mhstx")
+theme_override_font_sizes/font_size = 100
+text = "OUR"
+
+[node name="Label4" type="Label" parent="WordContainer" unique_id=1445205860]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.97474164, 0, 0.38930893, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 25
+theme_override_constants/shadow_offset_x = -8
+theme_override_constants/shadow_offset_y = 6
+theme_override_fonts/font = ExtResource("1_mhstx")
+theme_override_font_sizes/font_size = 100
+text = "SUPER"
+
+[node name="Label5" type="Label" parent="WordContainer" unique_id=1411211726]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.97474164, 0, 0.38930893, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 25
+theme_override_constants/shadow_offset_x = -8
+theme_override_constants/shadow_offset_y = 6
+theme_override_fonts/font = ExtResource("1_mhstx")
+theme_override_font_sizes/font_size = 100
+text = "BALLER!"
+
+[node name="SuperBaller" type="AudioStreamPlayer" parent="." unique_id=1376919083]
+autoplay = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2101319209]
+libraries/ = SubResource("AnimationLibrary_xm65n")

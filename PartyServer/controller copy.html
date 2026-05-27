@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Game Controller</title>
+<style>
+    /* --- GLOBAL LAYOUT --- */
+    body {
+        margin: 0; padding: 0;
+        background-color: #202020;
+        color: white;
+        font-family: sans-serif;
+        overflow: hidden;
+        touch-action: none; /* Disables browser gestures */
+        user-select: none;
+        -webkit-user-select: none;
+        height: 100vh; width: 100vw;
+        display: flex; flex-direction: column;
+    }
+
+    /* --- VIEWS --- */
+    #game-view {
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        position: relative;
+    }
+
+    #settings-view {
+        display: none; /* Hidden by default */
+        flex: 1;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #1a1a1a;
+        z-index: 10;
+    }
+
+    /* --- CONTROLLER UI --- */
+    .zone {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+
+    .btn {
+        background: #444;
+        border: 2px solid #666;
+        border-radius: 50%;
+        position: absolute;
+        display: flex; justify-content: center; align-items: center;
+        font-weight: bold; font-size: 24px;
+        box-shadow: 0 4px 0 #222;
+        transition: transform 0.1s, box-shadow 0.1s;
+        cursor: pointer; /* Shows hand cursor on PC */
+    }
+
+    .btn:active, .btn.pressed {
+        transform: translateY(4px);
+        box-shadow: 0 0 0 #222;
+        background-color: #666;
+    }
+
+    .dpad-btn { width: 60px; height: 60px; border-radius: 10px; }
+    #up { top: 20%; } #down { bottom: 20%; }
+    #left { left: 20%; } #right { right: 20%; }
+
+    .action-btn { width: 70px; height: 70px; background-color: #8b3a3a; }
+    #btn-A { bottom: 25%; right: 20%; background-color: #3a8b3a; }
+    #btn-B { right: 45%; bottom: 40%; background-color: #8b3a3a; }
+
+    /* --- HUD & MENUS --- */
+    #top-bar {
+        height: 40px;
+        background: #111;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        font-size: 14px;
+        border-bottom: 1px solid #333;
+    }
+
+    #settings-btn {
+        background: #333; border: 1px solid #555;
+        color: white; padding: 5px 15px; border-radius: 5px;
+        cursor: pointer;
+    }
+
+    /* --- SETTINGS FORM --- */
+    .form-group { margin-bottom: 20px; text-align: center; }
+    label { display: block; margin-bottom: 5px; color: #aaa; }
+    input { 
+        padding: 10px; font-size: 18px; border-radius: 5px; border: none; 
+        text-align: center; width: 200px;
+    }
+    .save-btn {
+        background: #2ecc71; color: white; border: none;
+        padding: 15px 40px; font-size: 20px; border-radius: 5px;
+        margin-top: 20px; cursor: pointer;
+    }
+</style>
+</head>
+<body>
+
+    <div id="top-bar">
+        <span id="connection-status" style="color:red">● Disconnected</span>
+        <button id="settings-btn" onclick="toggleSettings()">⚙ Settings</button>
+    </div>
+
+    <div id="game-view">
+        <div class="zone">
+            <div class="btn dpad-btn" id="up" data-key="UP">▲</div>
+            <div class="btn dpad-btn" id="left" data-key="LEFT">◀</div>
+            <div class="btn dpad-btn" id="right" data-key="RIGHT">▶</div>
+            <div class="btn dpad-btn" id="down" data-key="DOWN">▼</div>
+        </div>
+        <div class="zone">
+            <div class="btn action-btn" id="btn-B" data-key="B">B</div>
+            <div class="btn action-btn" id="btn-A" data-key="A">A</div>
+        </div>
+    </div>
+
+    <div id="settings-view">
+        <h2>Player Profile</h2>
+        
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" id="input-name" placeholder="Enter Name" maxlength="10">
+        </div>
+
+        <div class="form-group">
+            <label>Appearance ID (Number)</label>
+            <input type="number" id="input-avatar" placeholder="0" min="0" max="99">
+        </div>
+
+        <button class="save-btn" onclick="saveSettings()">SAVE & PLAY</button>
+    </div>
+
+<script>
+    // --- STATE MANAGEMENT ---
+    let state = {
+        id: localStorage.getItem("pid") || "P" + Math.floor(Math.random() * 1000),
+        name: localStorage.getItem("pname") || "Player",
+        avatar: localStorage.getItem("pavatar") || "1"
+    };
+    
+    // Save ID immediately so it persists
+    localStorage.setItem("pid", state.id);
+
+    // Populate Input fields
+    document.getElementById("input-name").value = state.name;
+    document.getElementById("input-avatar").value = state.avatar;
+
+    // --- WEBSOCKET AUTOMATIC CONNECTION ---
+    // This grabs the IP from the browser URL (e.g., 25.x.x.x or 192.168.x.x)
+    const host = window.location.hostname; 
+    const socket = new WebSocket("ws://" + host + ":8080");
+
+    socket.onopen = () => {
+        console.log("Connected to " + host);
+        document.getElementById('connection-status').innerText = "● Connected";
+        document.getElementById('connection-status').style.color = "#0f0";
+        // Send initial config on connection
+        sendConfig();
+    };
+
+    socket.onclose = () => {
+        document.getElementById('connection-status').innerText = "● Disconnected";
+        document.getElementById('connection-status').style.color = "red";
+    };
+
+    function sendConfig() {
+        if (socket.readyState === WebSocket.OPEN) {
+            const payload = {
+                type: "config",
+                id: state.id,
+                name: state.name,
+                avatar: parseInt(state.avatar)
+            };
+            socket.send(JSON.stringify(payload));
+        }
+    }
+
+    function sendInput(key, eventType) {
+        if (socket.readyState === WebSocket.OPEN) {
+            const payload = {
+                type: "input",
+                id: state.id,
+                key: key,
+                event: eventType
+            };
+            socket.send(JSON.stringify(payload));
+        }
+    }
+
+    // --- UI LOGIC ---
+    function toggleSettings() {
+        const gameView = document.getElementById("game-view");
+        const settingsView = document.getElementById("settings-view");
+        
+        if (settingsView.style.display === "flex") {
+            settingsView.style.display = "none";
+            gameView.style.display = "flex";
+        } else {
+            gameView.style.display = "none";
+            settingsView.style.display = "flex";
+        }
+    }
+
+    function saveSettings() {
+        state.name = document.getElementById("input-name").value || "Player";
+        state.avatar = document.getElementById("input-avatar").value || "1";
+
+        localStorage.setItem("pname", state.name);
+        localStorage.setItem("pavatar", state.avatar);
+
+        sendConfig();
+        toggleSettings();
+    }
+
+    // --- UNIVERSAL INPUT HANDLING (Mouse + Touch) ---
+    const buttons = document.querySelectorAll('.btn');
+
+    function handlePress(e) {
+        // Prevent default only if it's not a standard click (prevents scrolling)
+        if(e.cancelable && e.type !== 'mousedown') e.preventDefault();
+        
+        const btn = e.currentTarget;
+        
+        // Only trigger if not already pressed (prevents double-firing)
+        if (!btn.classList.contains('pressed')) {
+            btn.classList.add('pressed');
+            sendInput(btn.dataset.key, "down");
+            
+            // Vibration for Android/Phones
+            if (navigator.vibrate) navigator.vibrate(50);
+        }
+    }
+
+    function handleRelease(e) {
+        const btn = e.currentTarget;
+        
+        if (btn.classList.contains('pressed')) {
+            btn.classList.remove('pressed');
+            sendInput(btn.dataset.key, "up");
+        }
+    }
+
+    buttons.forEach(btn => {
+        // 1. TOUCH EVENTS (Phones)
+        btn.addEventListener('touchstart', handlePress, { passive: false });
+        btn.addEventListener('touchend', handleRelease);
+        
+        // 2. MOUSE EVENTS (PC/Hamachi testing)
+        btn.addEventListener('mousedown', handlePress);
+        btn.addEventListener('mouseup', handleRelease);
+        btn.addEventListener('mouseleave', handleRelease); // If mouse slides off button
+    });
+
+    // Prevent context menus (Right Click)
+    window.oncontextmenu = (e) => { e.preventDefault(); return false; };
+
+    // Prevent default touch actions ONLY on the game view
+    document.getElementById('game-view').addEventListener('touchmove', function(e) {
+        e.preventDefault();
+    }, { passive: false });
+
+</script>
+</body>
+</html>
+

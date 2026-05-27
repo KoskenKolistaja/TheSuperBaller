@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Game Controller (Safari)</title>
+<style>
+    /* --- SAFARI FIXES --- */
+    :root {
+        --safe-bottom: env(safe-area-inset-bottom);
+        --safe-top: env(safe-area-inset-top);
+    }
+
+    body {
+        margin: 0; padding: 0;
+        background-color: #202020;
+        color: white;
+        font-family: sans-serif;
+        overflow: hidden;
+        touch-action: none; 
+        user-select: none;
+        -webkit-user-select: none;
+        /* dvh = Dynamic Viewport Height. Fixes the Safari bottom bar issue */
+        height: 100dvh; 
+        width: 100vw;
+        display: flex; flex-direction: column;
+    }
+
+    #top-bar {
+        height: 44px; /* Standard iOS bar height */
+        margin-top: var(--safe-top);
+        background: #111;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        font-size: 14px;
+        flex-shrink: 0;
+    }
+
+    #game-view {
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        position: relative;
+        /* Ensure content is pushed up away from the home indicator */
+        padding-bottom: var(--safe-bottom);
+        box-sizing: border-box;
+    }
+
+    #settings-view {
+        display: none;
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(26, 26, 26, 0.98);
+        z-index: 100;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* --- CONTROLLER UI --- */
+    .zone {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        height: 100%;
+    }
+
+    .btn {
+        background: #444;
+        border: 2px solid #666;
+        border-radius: 50%;
+        position: absolute;
+        display: flex; justify-content: center; align-items: center;
+        font-weight: bold; font-size: 24px;
+        box-shadow: 0 4px 0 #222;
+        transition: transform 0.05s;
+        cursor: pointer;
+    }
+
+    .btn.pressed {
+        transform: translateY(4px);
+        box-shadow: 0 0 0 #222;
+        background-color: #666;
+    }
+
+    .action-btn { width: 90px; height: 90px; }
+    #btn-A { bottom: 25%; right: 15%; background-color: #3a8b3a; }
+    #btn-B { bottom: 45%; right: 40%; background-color: #8b3a3a; }
+
+    /* D-Pad Layout Adjustment for Safari */
+    .dpad-container {
+        position: relative;
+        width: 70vmin;
+        height: 70vmin;
+        max-width: 280px;
+        max-height: 280px;
+        border-radius: 50%;
+        background: #1a1a1a;
+        overflow: hidden;
+    }
+
+    .dpad-segment {
+        position: absolute;
+        width: 100%; height: 100%;
+        background: #444;
+    }
+    .dpad-segment.pressed { background: #666; }
+
+    #up    { clip-path: polygon(2% 0, 98% 0, 50% 48%); }
+    #right { clip-path: polygon(100% 2%, 100% 98%, 52% 50%); }
+    #down  { clip-path: polygon(98% 100%, 2% 100%, 50% 52%); }
+    #left  { clip-path: polygon(0 98%, 0 2%, 48% 50%); }
+
+    .dpad-segment span {
+        position: absolute;
+        font-size: 28px;
+        pointer-events: none;
+    }
+    #up span    { top: 12%; left: 50%; transform: translateX(-50%); }
+    #right span { right: 12%; top: 50%; transform: translateY(-50%); }
+    #down span  { bottom: 12%; left: 50%; transform: translateX(-50%); }
+    #left span  { left: 12%; top: 50%; transform: translateY(-50%); }
+
+    #settings-btn {
+        background: #333; border: 1px solid #555;
+        color: white; padding: 6px 12px; border-radius: 6px;
+    }
+
+    .form-group input { 
+        padding: 12px; font-size: 16px; /* 16px prevents iOS zoom on focus */
+        border-radius: 8px; border: none; width: 200px;
+    }
+    .save-btn {
+        background: #2ecc71; color: white; border: none;
+        padding: 15px 40px; font-size: 18px; border-radius: 8px;
+        margin-top: 15px;
+    }
+</style>
+</head>
+<body>
+
+    <div id="top-bar">
+        <span id="connection-status" style="color:red">● Offline</span>
+        <button id="settings-btn" onclick="toggleSettings()">⚙ Settings</button>
+    </div>
+
+    <div id="game-view">
+        <div class="zone">
+            <div class="dpad-container">
+                <div class="dpad-segment" id="up" data-key="UP"><span>▲</span></div>
+                <div class="dpad-segment" id="left" data-key="LEFT"><span>◀</span></div>
+                <div class="dpad-segment" id="right" data-key="RIGHT"><span>▶</span></div>
+                <div class="dpad-segment" id="down" data-key="DOWN"><span>▼</span></div>
+            </div>
+        </div>
+        
+        <div class="zone">
+            <div class="btn action-btn" id="btn-B" data-key="B">B</div>
+            <div class="btn action-btn" id="btn-A" data-key="A">A</div>
+        </div>
+    </div>
+
+    <div id="settings-view">
+        <h2 style="margin-bottom:30px">Player Profile</h2>
+        <div class="form-group">
+            <label style="display:block; color:#888; margin-bottom:8px">Name</label>
+            <input type="text" id="input-name" placeholder="Name">
+        </div>
+        <br>
+        <div class="form-group">
+            <label style="display:block; color:#888; margin-bottom:8px">Avatar ID</label>
+            <input type="number" id="input-avatar" placeholder="1">
+        </div>
+        <button class="save-btn" onclick="saveSettings()">SAVE & PLAY</button>
+        <p style="font-size:12px; color:#666; margin-top:20px">Tip: Use "Add to Home Screen" for Fullscreen</p>
+    </div>
+
+<script>
+    // Logic remains identical to your original code to maintain compatibility with your server
+    let state = {
+        id: localStorage.getItem("pid") || "P" + Math.floor(Math.random() * 1000),
+        name: localStorage.getItem("pname") || "SafariPlayer",
+        avatar: localStorage.getItem("pavatar") || "1"
+    };
+    
+    localStorage.setItem("pid", state.id);
+    document.getElementById("input-name").value = state.name;
+    document.getElementById("input-avatar").value = state.avatar;
+
+    const host = window.location.hostname; 
+    const socket = new WebSocket("ws://" + host + ":8080");
+
+    socket.onopen = () => {
+        document.getElementById('connection-status').innerText = "● Connected";
+        document.getElementById('connection-status').style.color = "#0f0";
+        sendConfig();
+    };
+
+    socket.onclose = () => {
+        document.getElementById('connection-status').innerText = "● Offline";
+        document.getElementById('connection-status').style.color = "red";
+    };
+
+    function sendConfig() {
+        if (socket.readyState === WebSocket.OPEN) {
+            socket.send(JSON.stringify({ type: "config", id: state.id, name: state.name, avatar: parseInt(state.avatar) }));
+        }
+    }
+
+    function sendInput(key, eventType) {
+        if (socket.readyState === WebSocket.OPEN) {
+            socket.send(JSON.stringify({ type: "input", id: state.id, key: key, event: eventType }));
+        }
+    }
+
+    function toggleSettings() {
+        const sv = document.getElementById("settings-view");
+        sv.style.display = (sv.style.display === "flex") ? "none" : "flex";
+    }
+
+    function saveSettings() {
+        state.name = document.getElementById("input-name").value || "Player";
+        state.avatar = document.getElementById("input-avatar").value || "1";
+        localStorage.setItem("pname", state.name);
+        localStorage.setItem("pavatar", state.avatar);
+        sendConfig();
+        toggleSettings();
+    }
+
+    const touchMap = new Map();
+    const keyState = {};
+
+    function updateKeyState(key, isDown) {
+        if (!key) return;
+        if (isDown && !keyState[key]) {
+            keyState[key] = true;
+            sendInput(key, "down");
+            document.querySelector(`[data-key="${key}"]`)?.classList.add('pressed');
+            if (navigator.vibrate) navigator.vibrate(15);
+        } else if (!isDown && keyState[key]) {
+            keyState[key] = false;
+            sendInput(key, "up");
+            document.querySelector(`[data-key="${key}"]`)?.classList.remove('pressed');
+        }
+    }
+
+    function handleTouch(e) {
+        e.preventDefault();
+        const currentTouches = new Map();
+        for (let i = 0; i < e.touches.length; i++) {
+            const t = e.touches[i];
+            const el = document.elementFromPoint(t.clientX, t.clientY);
+            const key = el?.closest('[data-key]')?.dataset.key;
+            if (key) currentTouches.set(t.identifier, key);
+        }
+        for (let [id, key] of currentTouches.entries()) {
+            const oldKey = touchMap.get(id);
+            if (oldKey !== key) {
+                if (oldKey) updateKeyState(oldKey, false);
+                updateKeyState(key, true);
+                touchMap.set(id, key);
+            }
+        }
+        for (let [id, oldKey] of touchMap.entries()) {
+            if (!currentTouches.has(id)) {
+                updateKeyState(oldKey, false);
+                touchMap.delete(id);
+            }
+        }
+    }
+
+    const gv = document.getElementById('game-view');
+    gv.addEventListener('touchstart', handleTouch, { passive: false });
+    gv.addEventListener('touchmove', handleTouch, { passive: false });
+    gv.addEventListener('touchend', handleTouch, { passive: false });
+    gv.addEventListener('touchcancel', handleTouch, { passive: false });
+
+    window.oncontextmenu = (e) => { e.preventDefault(); return false; };
+</script>
+</body>
+</html>

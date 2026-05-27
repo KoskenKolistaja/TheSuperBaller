@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://ccv1vuylbchl0"]
+
+[ext_resource type="Script" uid="uid://bv1sr26sk7x2e" path="res://Entities/PlayerCharacter/football_actions.gd" id="1_2s08c"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_2s08c"]
+radius = 2.0
+
+[node name="FootballActions" type="Area3D" unique_id=2135135668]
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("1_2s08c")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1508356738]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1.25)
+shape = SubResource("SphereShape3D_2s08c")

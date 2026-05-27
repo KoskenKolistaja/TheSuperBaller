@@ -1,0 +1,336 @@
+[gd_scene format=3 uid="uid://b7hvhg2b6x6kq"]
+
+[ext_resource type="AudioStream" uid="uid://bv4q6adm7sdjb" path="res://Assets/Music/Fusion2.ogg" id="1_ev5l6"]
+[ext_resource type="Script" uid="uid://6h5pcp84mprw" path="res://Views/MainMenu/main_menu.gd" id="1_gu8uj"]
+[ext_resource type="Script" uid="uid://2pws5kh80c2m" path="res://Views/MainMenu/3d_world_menu.gd" id="3_6582t"]
+[ext_resource type="FontFile" uid="uid://d12q2lts1g6oo" path="res://Assets/Fonts/Melon Pop.otf" id="4_6582t"]
+[ext_resource type="Texture2D" uid="uid://b8fuhw3uqicux" path="res://Assets/Skies/sky_19_2k.png" id="4_gjaug"]
+[ext_resource type="PackedScene" uid="uid://6jqfip7f8w0q" path="res://Views/MainMenu/player_platform.tscn" id="5_6582t"]
+[ext_resource type="FontFile" uid="uid://drhxr2u1mcy6o" path="res://Assets/Fonts/Showpop.ttf" id="5_e2odx"]
+[ext_resource type="Script" uid="uid://nuvb8mabpo3k" path="res://Views/MainMenu/player_position_container.gd" id="5_gjaug"]
+[ext_resource type="PackedScene" uid="uid://bpamt1mmu1v7" path="res://Entities/Props/player_prop.tscn" id="6_6582t"]
+[ext_resource type="Texture2D" uid="uid://1mopno7hceku" path="res://Assets/Pictures/Logo.png" id="9_e2odx"]
+[ext_resource type="AudioStream" uid="uid://cxpr1sgcelpsh" path="res://Assets/SFX/swoosh1.ogg" id="10_awse1"]
+[ext_resource type="AudioStream" uid="uid://b7jtubiikv4af" path="res://Assets/SFX/swoosh2.ogg" id="11_gjaug"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_18ogo"]
+panorama = ExtResource("4_gjaug")
+
+[sub_resource type="Sky" id="Sky_y1b1f"]
+sky_material = SubResource("PanoramaSkyMaterial_18ogo")
+
+[sub_resource type="Environment" id="Environment_egtk6"]
+background_mode = 2
+sky = SubResource("Sky_y1b1f")
+tonemap_mode = 2
+glow_enabled = true
+fog_light_energy = 0.01
+volumetric_fog_density = 0.1
+volumetric_fog_albedo = Color(0.43134022, 0.43134025, 0.43134025, 1)
+volumetric_fog_emission_energy = 0.2
+volumetric_fog_length = 21.12
+volumetric_fog_sky_affect = 0.227
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_egtk6"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0, 0.5503255, 0.7960092, 0.827451)
+border_width_left = 5
+border_width_top = 1
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(1, 1, 1, 0.6745098)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3k7gy"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(6.738305e-07, 0.35797408, 0.52689004, 0.827451)
+border_width_left = 5
+border_width_top = 1
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.4, 0, 0.26666662, 0.6745098)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gq2q7"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.20346397, 0.7157897, 0.999999, 0.827451)
+border_width_left = 5
+border_width_top = 1
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(1, 0.55066776, 0.77679205, 0.6745098)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[node name="MainMenu" type="Control" unique_id=1497027322 node_paths=PackedStringArray("world")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gu8uj")
+world = NodePath("3DWorldMenu")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1139660404]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
+[node name="MenuMusic" type="AudioStreamPlayer" parent="." unique_id=1214603447]
+stream = ExtResource("1_ev5l6")
+autoplay = true
+
+[node name="3DWorldMenu" type="Node3D" parent="." unique_id=212367914]
+script = ExtResource("3_6582t")
+
+[node name="MenuCamera" type="Camera3D" parent="3DWorldMenu" unique_id=174229844]
+unique_name_in_owner = true
+transform = Transform3D(-4.371139e-08, 0.17364816, -0.9848076, 0, 0.9848076, 0.17364816, 1, 7.590402e-09, -4.3047308e-08, 7.793, 5, 16)
+fov = 60.0
+
+[node name="Ambient" type="Node3D" parent="3DWorldMenu" unique_id=471788033]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="3DWorldMenu/Ambient" unique_id=2029747146]
+environment = SubResource("Environment_egtk6")
+
+[node name="PlayerPositionContainer" type="Node3D" parent="3DWorldMenu" unique_id=850617108 groups=["input_receiver"]]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 16)
+script = ExtResource("5_gjaug")
+
+[node name="PlayerPlatform" parent="3DWorldMenu/PlayerPositionContainer" unique_id=1025122118 instance=ExtResource("5_6582t")]
+transform = Transform3D(0.6427875, 0, -0.76604444, 0, 1, 0, 0.76604444, 0, 0.6427875, 0, 3, -16)
+
+[node name="PlayerPlatform2" parent="3DWorldMenu/PlayerPositionContainer" unique_id=1086894135 instance=ExtResource("5_6582t")]
+transform = Transform3D(0.49999997, 0, -0.8660254, 0, 1, 0, 0.8660254, 0, 0.49999997, 3, 3, -11)
+
+[node name="PlayerPlatform3" parent="3DWorldMenu/PlayerPositionContainer" unique_id=2071841904 instance=ExtResource("5_6582t")]
+transform = Transform3D(0.17364813, 0, -0.9848077, 0, 1, 0, 0.9848077, 0, 0.17364813, 5, 3, -6)
+
+[node name="PlayerPlatform4" parent="3DWorldMenu/PlayerPositionContainer" unique_id=1511326195 instance=ExtResource("5_6582t")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 6, 3, -1)
+
+[node name="PlayerPlatform5" parent="3DWorldMenu/PlayerPositionContainer" unique_id=2078347373 instance=ExtResource("5_6582t")]
+transform = Transform3D(-0.17364822, 0, -0.9848077, 0, 1, 0, 0.9848077, 0, -0.17364822, 5, 3, 4)
+
+[node name="PlayerPlatform6" parent="3DWorldMenu/PlayerPositionContainer" unique_id=1663061595 instance=ExtResource("5_6582t")]
+transform = Transform3D(-0.50000006, 0, -0.8660254, 0, 1, 0, 0.8660254, 0, -0.50000006, 3, 3, 9)
+
+[node name="PlayerPlatform7" parent="3DWorldMenu/PlayerPositionContainer" unique_id=1771616544 instance=ExtResource("5_6582t")]
+transform = Transform3D(-0.64278764, 0, -0.76604444, 0, 1, 0, 0.76604444, 0, -0.64278764, 0, 3, 14)
+
+[node name="PlayerPlatform8" parent="3DWorldMenu/PlayerPositionContainer" unique_id=2019084800 instance=ExtResource("5_6582t")]
+transform = Transform3D(0.6427875, 0, -0.76604444, 0, 1, 0, 0.76604444, 0, 0.6427875, 0, -4, -16)
+
+[node name="PlayerPlatform9" parent="3DWorldMenu/PlayerPositionContainer" unique_id=712971903 instance=ExtResource("5_6582t")]
+transform = Transform3D(0.49999997, 0, -0.8660254, 0, 1, 0, 0.8660254, 0, 0.49999997, 3, -4, -11)
+
+[node name="PlayerPlatform10" parent="3DWorldMenu/PlayerPositionContainer" unique_id=726824139 instance=ExtResource("5_6582t")]
+transform = Transform3D(0.17364813, 0, -0.9848077, 0, 1, 0, 0.9848077, 0, 0.17364813, 5, -4, -6)
+
+[node name="PlayerPlatform11" parent="3DWorldMenu/PlayerPositionContainer" unique_id=1295320815 instance=ExtResource("5_6582t")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 6, -4, -1)
+
+[node name="PlayerPlatform12" parent="3DWorldMenu/PlayerPositionContainer" unique_id=1959064993 instance=ExtResource("5_6582t")]
+transform = Transform3D(-0.17364822, 0, -0.9848077, 0, 1, 0, 0.9848077, 0, -0.17364822, 5, -4, 4)
+
+[node name="PlayerPlatform13" parent="3DWorldMenu/PlayerPositionContainer" unique_id=2073663764 instance=ExtResource("5_6582t")]
+transform = Transform3D(-0.50000006, 0, -0.8660254, 0, 1, 0, 0.8660254, 0, -0.50000006, 3, -4, 9)
+
+[node name="PlayerPlatform14" parent="3DWorldMenu/PlayerPositionContainer" unique_id=208719699 instance=ExtResource("5_6582t")]
+transform = Transform3D(-0.64278764, 0, -0.76604444, 0, 1, 0, 0.76604444, 0, -0.64278764, 0, -4, 14)
+
+[node name="PlayerProp" parent="3DWorldMenu" unique_id=1756207151 instance=ExtResource("6_6582t")]
+transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, -6, 0, 6)
+
+[node name="LightContainer" type="Node3D" parent="3DWorldMenu" unique_id=678593583]
+
+[node name="SpotLight3D" type="SpotLight3D" parent="3DWorldMenu/LightContainer" unique_id=738398985]
+transform = Transform3D(1, 0, 0, 0, 0.69797796, 0.7161192, 0, -0.7161192, 0.69797796, -6, 7.0812407, 13)
+light_color = Color(0.92, 0.92, 0.92, 1)
+light_energy = 5.703
+light_volumetric_fog_energy = 1.074
+spot_range = 20.0
+
+[node name="SpotLight3D3" type="SpotLight3D" parent="3DWorldMenu/LightContainer" unique_id=194903960]
+transform = Transform3D(0.8660254, 0.3580596, -0.34898898, 0, 0.69797796, 0.7161192, 0.5, -0.62017745, 0.6044666, 17, 21.081242, 30.694128)
+light_color = Color(0.92, 0.92, 0.92, 1)
+light_energy = 13.624
+light_volumetric_fog_energy = 0.0
+spot_range = 3334.518
+spot_angle = 46.78
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="3DWorldMenu/LightContainer" unique_id=1225461617]
+transform = Transform3D(-0.39413276, -0.21436772, 0.89370346, 0.12901427, 0.9498834, 0.28473997, -0.9099531, 0.22752585, -0.34672368, 1, 2.6389446, -3)
+light_color = Color(0.57409465, 0.71350867, 1, 1)
+light_energy = 1.585
+light_indirect_energy = 0.684
+light_volumetric_fog_energy = 3.01
+spot_range = 25.443
+
+[node name="OmniLight3D" type="OmniLight3D" parent="3DWorldMenu/LightContainer" unique_id=1071449842]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 9, 16)
+light_energy = 0.0
+omni_range = 220.904
+
+[node name="GameNameLabel" type="Label" parent="." unique_id=1855324541]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -223.5
+offset_top = 48.54
+offset_right = 223.5
+offset_bottom = 113.54
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.7666667, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.7333331, 0, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 33
+theme_override_constants/paragraph_spacing = 22
+theme_override_constants/shadow_offset_x = -6
+theme_override_constants/shadow_offset_y = 3
+theme_override_fonts/font = ExtResource("4_6582t")
+theme_override_font_sizes/font_size = 87
+text = "The Super Baller"
+
+[node name="MenuButtonContainer" type="VBoxContainer" parent="." unique_id=285731433]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StartButton" type="Button" parent="MenuButtonContainer" unique_id=674127116]
+custom_minimum_size = Vector2(250, 100)
+layout_mode = 2
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_e2odx")
+theme_override_font_sizes/font_size = 44
+theme_override_styles/normal = SubResource("StyleBoxFlat_egtk6")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3k7gy")
+theme_override_styles/hover = SubResource("StyleBoxFlat_gq2q7")
+text = "Start"
+
+[node name="SettingsButton" type="Button" parent="MenuButtonContainer" unique_id=1013469758]
+custom_minimum_size = Vector2(250, 100)
+layout_mode = 2
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_e2odx")
+theme_override_font_sizes/font_size = 44
+theme_override_styles/normal = SubResource("StyleBoxFlat_egtk6")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3k7gy")
+theme_override_styles/hover = SubResource("StyleBoxFlat_gq2q7")
+text = "Settings"
+
+[node name="Button" type="Button" parent="MenuButtonContainer" unique_id=1078369750]
+custom_minimum_size = Vector2(250, 100)
+layout_mode = 2
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_e2odx")
+theme_override_font_sizes/font_size = 44
+theme_override_styles/normal = SubResource("StyleBoxFlat_egtk6")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3k7gy")
+theme_override_styles/hover = SubResource("StyleBoxFlat_gq2q7")
+text = "Exit"
+
+[node name="SelectionButtonContainer" type="VBoxContainer" parent="." unique_id=1918432105]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -125.0
+offset_top = -204.0
+offset_right = 125.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="StartMatchButton" type="Button" parent="SelectionButtonContainer" unique_id=1526913720]
+custom_minimum_size = Vector2(250, 100)
+layout_mode = 2
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_e2odx")
+theme_override_font_sizes/font_size = 44
+theme_override_styles/normal = SubResource("StyleBoxFlat_egtk6")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3k7gy")
+theme_override_styles/hover = SubResource("StyleBoxFlat_gq2q7")
+text = "Start"
+
+[node name="BackButton" type="Button" parent="SelectionButtonContainer" unique_id=690211635]
+custom_minimum_size = Vector2(250, 100)
+layout_mode = 2
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_e2odx")
+theme_override_font_sizes/font_size = 44
+theme_override_styles/normal = SubResource("StyleBoxFlat_egtk6")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3k7gy")
+theme_override_styles/hover = SubResource("StyleBoxFlat_gq2q7")
+text = "Back"
+
+[node name="GameLogo" type="TextureRect" parent="." unique_id=368719381]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -315.5
+offset_right = 315.5
+offset_bottom = 345.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("9_e2odx")
+expand_mode = 1
+
+[node name="MenuSFX" type="Node" parent="." unique_id=1455090535]
+
+[node name="swoosh1" type="AudioStreamPlayer" parent="MenuSFX" unique_id=608451810]
+unique_name_in_owner = true
+stream = ExtResource("10_awse1")
+
+[node name="swoosh2" type="AudioStreamPlayer" parent="MenuSFX" unique_id=2018396156]
+unique_name_in_owner = true
+stream = ExtResource("11_gjaug")
+
+[connection signal="pressed" from="MenuButtonContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="MenuButtonContainer/Button" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="SelectionButtonContainer/StartMatchButton" to="." method="_on_start_match_button_pressed"]
+[connection signal="pressed" from="SelectionButtonContainer/BackButton" to="." method="_on_back_button_pressed"]

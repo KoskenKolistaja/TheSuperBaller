@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://6jqfip7f8w0q"]
+
+[ext_resource type="Script" uid="uid://c4voeguf3sjc7" path="res://Views/MainMenu/player_platform.gd" id="1_gw26t"]
+[ext_resource type="PackedScene" uid="uid://bpamt1mmu1v7" path="res://Entities/Props/player_prop.tscn" id="2_2tvf2"]
+[ext_resource type="FontFile" uid="uid://cgtsstgvydccj" path="res://Assets/Fonts/Melon Pop.ttf" id="3_rof0y"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_gw26t"]
+top_radius = 1.5
+bottom_radius = 1.75
+height = 0.5
+
+[node name="PlayerPlatform" type="Node3D" unique_id=1025122118]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("1_gw26t")
+player_prop = ExtResource("2_2tvf2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=462644851]
+mesh = SubResource("CylinderMesh_gw26t")
+
+[node name="PlayerContainer" type="Node3D" parent="." unique_id=121173357]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.22906387, 0)
+
+[node name="PlayerNameLabel" type="Label3D" parent="." unique_id=1433330170]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.742278e-08, 0, 2)
+font = ExtResource("3_rof0y")
+font_size = 150

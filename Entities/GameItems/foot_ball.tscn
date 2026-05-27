@@ -1,0 +1,89 @@
+[gd_scene format=3 uid="uid://fxjmgf40y0mk"]
+
+[ext_resource type="Script" uid="uid://b41chctf8ph46" path="res://Entities/GameItems/foot_ball.gd" id="1_vemoj"]
+[ext_resource type="Texture2D" uid="uid://dnu7h0ikgbcit" path="res://Assets/Textures/football-diffuse-512 (1).png" id="2_tpcom"]
+[ext_resource type="Texture2D" uid="uid://bofk74ohw64rk" path="res://Assets/Textures/football-normals-512.png" id="3_stu4c"]
+[ext_resource type="Script" uid="uid://dtw0jdnbwg715" path="res://Entities/GameItems/shadow.gd" id="4_stu4c"]
+[ext_resource type="AudioStream" uid="uid://do8y03flct8mw" path="res://Assets/SFX/RockHit.ogg" id="5_cdasr"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fr0ii"]
+friction = 0.6
+bounce = 0.7
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fr0ii"]
+albedo_texture = ExtResource("2_tpcom")
+normal_enabled = true
+normal_scale = 2.15
+normal_texture = ExtResource("3_stu4c")
+
+[sub_resource type="SphereMesh" id="SphereMesh_fr0ii"]
+material = SubResource("StandardMaterial3D_fr0ii")
+radius = 1.0
+height = 2.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_fr0ii"]
+radius = 1.0
+
+[sub_resource type="Gradient" id="Gradient_tpcom"]
+offsets = PackedFloat32Array(0, 0.73571426)
+colors = PackedColorArray(0.00069389754, 0.00069389766, 0.0006938976, 0.88235295, 0.43, 0.43, 0.43, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_stu4c"]
+gradient = SubResource("Gradient_tpcom")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cdasr"]
+transparency = 1
+albedo_texture = SubResource("GradientTexture2D_stu4c")
+
+[sub_resource type="QuadMesh" id="QuadMesh_tpcom"]
+material = SubResource("StandardMaterial3D_cdasr")
+size = Vector2(2, 2)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_cdasr"]
+radius = 1.0652174
+
+[node name="FootBall" type="RigidBody3D" unique_id=410740049 groups=["football"]]
+collision_layer = 13
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_fr0ii")
+contact_monitor = true
+script = ExtResource("1_vemoj")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=681695944]
+layers = 257
+mesh = SubResource("SphereMesh_fr0ii")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1488130317]
+shape = SubResource("SphereShape3D_fr0ii")
+
+[node name="Shadow" type="MeshInstance3D" parent="." unique_id=427477921]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+top_level = true
+visible = false
+mesh = SubResource("QuadMesh_tpcom")
+script = ExtResource("4_stu4c")
+
+[node name="KickSFX" type="AudioStreamPlayer" parent="." unique_id=2096462955]
+stream = ExtResource("5_cdasr")
+volume_db = 10.0
+
+[node name="LabelPivot" type="Node3D" parent="." unique_id=437186580]
+top_level = true
+visible = false
+
+[node name="PlayerNameLabel" type="Label3D" parent="LabelPivot" unique_id=1793282806]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4673326, 0)
+billboard = 1
+text = "Don Simeon"
+font_size = 200
+
+[node name="Area3D" type="Area3D" parent="." unique_id=464635131]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1416093244]
+shape = SubResource("SphereShape3D_cdasr")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

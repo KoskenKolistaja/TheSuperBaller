@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Game Controller</title>
+<style>
+    /* --- GLOBAL LAYOUT --- */
+    body {
+        margin: 0; padding: 0;
+        background-color: #202020;
+        color: white;
+        font-family: sans-serif;
+        overflow: hidden;
+        touch-action: none; /* Disables browser gestures */
+        user-select: none;
+        -webkit-user-select: none;
+        height: 100vh; width: 100vw;
+        display: flex; flex-direction: column;
+    }
+
+    /* --- VIEWS --- */
+    #game-view {
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        position: relative;
+    }
+
+    #settings-view {
+        display: none;
+        flex: 1;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #1a1a1a;
+        z-index: 10;
+        overflow-y: auto;
+    }
+
+    /* --- CONTROLLER UI --- */
+    .zone {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+
+    /* Action Buttons (Right Side) */
+    .btn {
+        background: #444;
+        border: 2px solid #666;
+        border-radius: 50%;
+        position: absolute;
+        display: flex; justify-content: center; align-items: center;
+        font-weight: bold; font-size: 28px;
+        box-shadow: 0 6px 0 #222;
+        transition: transform 0.1s, box-shadow 0.1s, background-color 0.1s;
+        cursor: pointer;
+    }
+
+    .btn.pressed {
+        transform: translateY(6px);
+        box-shadow: 0 0 0 #222;
+        background-color: #666;
+    }
+
+    .action-btn { width: 120px; height: 120px; background-color: #8b3a3a; }
+    #btn-A { bottom: 20%; right: 15%; background-color: #3a8b3a; }
+    #btn-B { right: 45%; bottom: 35%; background-color: #8b3a3a; }
+
+    /* D-Pad (Left Side) - Large Sliding Wheel */
+    .dpad-container {
+        position: relative;
+        width: 80vmin;
+        height: 80vmin;
+        max-width: 320px;
+        max-height: 320px;
+        border-radius: 50%;
+        background: #1a1a1a; /* Creates the dark cross gap */
+        overflow: hidden;
+        box-shadow: 0 8px 15px rgba(0,0,0,0.4);
+    }
+
+    .dpad-segment {
+        position: absolute;
+        width: 100%; height: 100%;
+        background: #444;
+        cursor: pointer;
+        transition: background 0.1s;
+    }
+
+    .dpad-segment.pressed { background: #666; }
+
+    /* Clip-paths make 4 perfectly fitted triangles with tiny gaps */
+    #up    { clip-path: polygon(2% 0, 98% 0, 50% 48%); }
+    #right { clip-path: polygon(100% 2%, 100% 98%, 52% 50%); }
+    #down  { clip-path: polygon(98% 100%, 2% 100%, 50% 52%); }
+    #left  { clip-path: polygon(0 98%, 0 2%, 48% 50%); }
+
+    /* Text centering inside the clipped triangles */
+    .dpad-segment span {
+        position: absolute;
+        font-size: 32px;
+        font-weight: bold;
+        pointer-events: none; /* Crucial: allows touch to pass to segment */
+    }
+    #up span    { top: 15%; left: 50%; transform: translate(-50%, 0); }
+    #right span { right: 15%; top: 50%; transform: translate(0, -50%); }
+    #down span  { bottom: 15%; left: 50%; transform: translate(-50%, 0); }
+    #left span  { left: 15%; top: 50%; transform: translate(0, -50%); }
+
+    /* --- HUD & MENUS --- */
+    #top-bar {
+        height: 40px;
+        background: #111;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        font-size: 14px;
+        border-bottom: 1px solid #333;
+    }
+
+    #settings-btn {
+        background: #333; border: 1px solid #555;
+        color: white; padding: 5px 15px; border-radius: 5px;
+        cursor: pointer;
+    }
+
+    /* --- SETTINGS FORM --- */
+    .form-group { margin-bottom: 20px; text-align: center; }
+    label { display: block; margin-bottom: 5px; color: #aaa; }
+    input { 
+        padding: 10px; font-size: 18px; border-radius: 5px; border: none; 
+        text-align: center; width: 200px;
+    }
+    .save-btn {
+        background: #2ecc71; color: white; border: none;
+        padding: 15px 40px; font-size: 20px; border-radius: 5px;
+        margin-top: 10px; cursor: pointer; width: 220px;
+    }
+    .fullscreen-btn { background: #3498db; }
+</style>
+</head>
+<body>
+
+    <div id="top-bar">
+        <span id="connection-status" style="color:red">● Disconnected</span>
+        <button id="settings-btn" onclick="toggleSettings()">⚙ Settings</button>
+    </div>
+
+    <div id="game-view">
+        <div class="zone">
+            <div class="dpad-container">
+                <div class="dpad-segment" id="up" data-key="UP"><span>▲</span></div>
+                <div class="dpad-segment" id="left" data-key="LEFT"><span>◀</span></div>
+                <div class="dpad-segment" id="right" data-key="RIGHT"><span>▶</span></div>
+                <div class="dpad-segment" id="down" data-key="DOWN"><span>▼</span></div>
+            </div>
+        </div>
+        
+        <div class="zone">
+            <div class="btn action-btn" id="btn-B" data-key="B">B</div>
+            <div class="btn action-btn" id="btn-A" data-key="A">A</div>
+        </div>
+    </div>
+
+    <div id="settings-view">
+        <h2>Player Profile</h2>
+        
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" id="input-name" placeholder="Enter Name" maxlength="10">
+        </div>
+
+        <div class="form-group">
+            <label>Appearance ID (Number)</label>
+            <input type="number" id="input-avatar" placeholder="0" min="0" max="99">
+        </div>
+
+        <div class="form-group">
+            <button class="save-btn fullscreen-btn" onclick="toggleFullScreen()">Toggle Fullscreen</button>
+        </div>
+
+        <button class="save-btn" onclick="saveSettings()">SAVE & PLAY</button>
+    </div>
+
+<script>
+    // --- STATE MANAGEMENT ---
+    let state = {
+        id: localStorage.getItem("pid") || "P" + Math.floor(Math.random() * 1000),
+        name: localStorage.getItem("pname") || "Player",
+        avatar: localStorage.getItem("pavatar") || "1"
+    };
+    
+    localStorage.setItem("pid", state.id);
+
+    document.getElementById("input-name").value = state.name;
+    document.getElementById("input-avatar").value = state.avatar;
+
+    // --- WEBSOCKET CONNECTION ---
+    const host = window.location.hostname; 
+    const socket = new WebSocket("ws://" + host + ":8080");
+
+    socket.onopen = () => {
+        document.getElementById('connection-status').innerText = "● Connected";
+        document.getElementById('connection-status').style.color = "#0f0";
+        sendConfig();
+    };
+
+    socket.onclose = () => {
+        document.getElementById('connection-status').innerText = "● Disconnected";
+        document.getElementById('connection-status').style.color = "red";
+    };
+
+    function sendConfig() {
+        if (socket.readyState === WebSocket.OPEN) {
+            socket.send(JSON.stringify({ type: "config", id: state.id, name: state.name, avatar: parseInt(state.avatar) }));
+        }
+    }
+
+    function sendInput(key, eventType) {
+        if (socket.readyState === WebSocket.OPEN) {
+            socket.send(JSON.stringify({ type: "input", id: state.id, key: key, event: eventType }));
+        }
+    }
+
+    // --- UI & SETTINGS LOGIC ---
+    function toggleSettings() {
+        const gameView = document.getElementById("game-view");
+        const settingsView = document.getElementById("settings-view");
+        
+        if (settingsView.style.display === "flex") {
+            settingsView.style.display = "none";
+            gameView.style.display = "flex";
+        } else {
+            gameView.style.display = "none";
+            settingsView.style.display = "flex";
+        }
+    }
+
+    function saveSettings() {
+        state.name = document.getElementById("input-name").value || "Player";
+        state.avatar = document.getElementById("input-avatar").value || "1";
+
+        localStorage.setItem("pname", state.name);
+        localStorage.setItem("pavatar", state.avatar);
+
+        sendConfig();
+        toggleSettings();
+    }
+
+    function toggleFullScreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen().catch(err => {
+                console.warn(`Error attempting to enable fullscreen: ${err.message}`);
+            });
+        } else {
+            if (document.exitFullscreen) document.exitFullscreen();
+        }
+    }
+
+    // --- CONTINUOUS INPUT HANDLING (SLIDE-TO-PRESS) ---
+    const gameView = document.getElementById('game-view');
+    const touchMap = new Map(); // Maps Touch ID to Currently Pressed Key
+    const keyState = {}; // Tracks which keys are currently down globally
+
+    // Master function for triggering an up/down state safely
+    function updateKeyState(key, isDown) {
+        if (!key) return;
+        
+        if (isDown && !keyState[key]) {
+            keyState[key] = true;
+            sendInput(key, "down");
+            const btn = document.querySelector(`[data-key="${key}"]`);
+            if (btn) btn.classList.add('pressed');
+            if (navigator.vibrate) navigator.vibrate(20);
+            
+        } else if (!isDown && keyState[key]) {
+            keyState[key] = false;
+            sendInput(key, "up");
+            const btn = document.querySelector(`[data-key="${key}"]`);
+            if (btn) btn.classList.remove('pressed');
+        }
+    }
+
+    // Evaluates all current active touches based on screen coordinates
+    function handleTouch(e) {
+        e.preventDefault(); // Stop mobile scrolling/zooming
+        const currentTouches = new Map();
+        
+        // 1. Identify what button each finger is currently resting on
+        for (let i = 0; i < e.touches.length; i++) {
+            const touch = e.touches[i];
+            const element = document.elementFromPoint(touch.clientX, touch.clientY);
+            const btn = element ? element.closest('[data-key]') : null;
+            const key = btn ? btn.dataset.key : null;
+            
+            if (key) {
+                currentTouches.set(touch.identifier, key);
+            }
+        }
+        
+        // 2. Press new keys or transition between keys (Slide effect)
+        for (let [id, key] of currentTouches.entries()) {
+            const oldKey = touchMap.get(id);
+            if (oldKey !== key) {
+                if (oldKey) updateKeyState(oldKey, false); // Lift off old key
+                updateKeyState(key, true);                 // Press down new key
+                touchMap.set(id, key);
+            }
+        }
+        
+        // 3. Release keys if the finger slid off completely into a deadzone
+        for (let [id, oldKey] of touchMap.entries()) {
+            if (!currentTouches.has(id)) {
+                updateKeyState(oldKey, false);
+                touchMap.delete(id);
+            }
+        }
+    }
+
+    // Cleans up released fingers
+    function handleTouchEnd(e) {
+        e.preventDefault();
+        for (let i = 0; i < e.changedTouches.length; i++) {
+            const id = e.changedTouches[i].identifier;
+            const oldKey = touchMap.get(id);
+            if (oldKey) {
+                updateKeyState(oldKey, false);
+                touchMap.delete(id);
+            }
+        }
+    }
+
+    // Touch Event Listeners
+    gameView.addEventListener('touchstart', handleTouch, { passive: false });
+    gameView.addEventListener('touchmove', handleTouch, { passive: false });
+    gameView.addEventListener('touchend', handleTouchEnd, { passive: false });
+    gameView.addEventListener('touchcancel', handleTouchEnd, { passive: false });
+
+    // --- PC MOUSE FALLBACK (For testing in browser) ---
+    let isMouseDown = false;
+    let currentMouseKey = null;
+
+    gameView.addEventListener('mousedown', (e) => {
+        isMouseDown = true;
+        handleMouseMove(e);
+    });
+
+    gameView.addEventListener('mousemove', handleMouseMove);
+
+    window.addEventListener('mouseup', () => {
+        isMouseDown = false;
+        if (currentMouseKey) {
+            updateKeyState(currentMouseKey, false);
+            currentMouseKey = null;
+        }
+    });
+
+    function handleMouseMove(e) {
+        if (!isMouseDown) return;
+        const element = document.elementFromPoint(e.clientX, e.clientY);
+        const btn = element ? element.closest('[data-key]') : null;
+        const key = btn ? btn.dataset.key : null;
+        
+        if (key !== currentMouseKey) {
+            if (currentMouseKey) updateKeyState(currentMouseKey, false);
+            if (key) updateKeyState(key, true);
+            currentMouseKey = key;
+        }
+    }
+
+    // Prevent Right Click Menus
+    window.oncontextmenu = (e) => { e.preventDefault(); return false; };
+
+</script>
+</body>
+</html>

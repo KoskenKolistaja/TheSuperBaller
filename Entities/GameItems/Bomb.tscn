@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://bluneudmc4c0"]
+
+[ext_resource type="Script" uid="uid://5evemkmfv6co" path="res://Entities/GameItems/bomb.gd" id="1_1r4ov"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_fs853"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1r4ov"]
+albedo_color = Color(0.16924527, 0.1692453, 0.16924527, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_fs853"]
+top_radius = 0.2
+bottom_radius = 0.22
+height = 0.3
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_1r4ov"]
+top_radius = 0.05
+bottom_radius = 0.02
+height = 0.3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fs853"]
+albedo_color = Color(0.93333334, 1, 0.8, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_fs853"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_1r4ov"]
+height = 0.2
+radius = 0.22
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1r4ov"]
+radius = 10.0
+
+[node name="Bomb" type="RigidBody3D" unique_id=1314544803]
+collision_layer = 5
+script = ExtResource("1_1r4ov")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1406252288]
+mesh = SubResource("SphereMesh_fs853")
+surface_material_override/0 = SubResource("StandardMaterial3D_1r4ov")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=216042487]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3835065, 0)
+mesh = SubResource("CylinderMesh_fs853")
+surface_material_override/0 = SubResource("StandardMaterial3D_1r4ov")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=420229063]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5963907, 0)
+mesh = SubResource("CylinderMesh_1r4ov")
+surface_material_override/0 = SubResource("StandardMaterial3D_fs853")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1495143197]
+shape = SubResource("SphereShape3D_fs853")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=1534325424]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4325477, 0)
+shape = SubResource("CylinderShape3D_1r4ov")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1043180280]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=2125910131]
+shape = SubResource("SphereShape3D_1r4ov")
