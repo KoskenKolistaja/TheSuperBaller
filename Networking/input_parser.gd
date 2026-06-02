@@ -54,6 +54,36 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("9"):
 		forward_player_input("9","A","down")
 		PlayerData.player_names["9"] = "Player9"
+	if Input.is_action_just_pressed("10"):
+		forward_player_input("10","A","down")
+		PlayerData.player_names["10"] = "Player10"
+	if Input.is_action_just_pressed("11"):
+		forward_player_input("11","A","down")
+		PlayerData.player_names["11"] = "Player11"
+	if Input.is_action_just_pressed("12"):
+		forward_player_input("12","A","down")
+		PlayerData.player_names["12"] = "Player12"
+	if Input.is_action_just_pressed("13"):
+		forward_player_input("13","A","down")
+		PlayerData.player_names["13"] = "Player13"
+	if Input.is_action_just_pressed("14"):
+		forward_player_input("14","A","down")
+		PlayerData.player_names["14"] = "Player14"
+	if Input.is_action_just_pressed("15"):
+		forward_player_input("15","A","down")
+		PlayerData.player_names["15"] = "Player15"
+	if Input.is_action_just_pressed("16"):
+		forward_player_input("16","A","down")
+		PlayerData.player_names["16"] = "Player16"
+	if Input.is_action_just_pressed("17"):
+		forward_player_input("17","A","down")
+		PlayerData.player_names["17"] = "Player17"
+	if Input.is_action_just_pressed("18"):
+		forward_player_input("18","A","down")
+		PlayerData.player_names["18"] = "Player18"
+	if Input.is_action_just_pressed("19"):
+		forward_player_input("19","A","down")
+		PlayerData.player_names["19"] = "Player19"
 	
 	
 	# --- Controller Device 0 ---

@@ -16,6 +16,9 @@ extends Node3D
 
 func setup(player_dictionary):
 	
+	if not player_dictionary:
+		return
+	
 	var name = player_dictionary["name"]
 	%WinLabel.text = name + " is the Super Baller™!"
 	

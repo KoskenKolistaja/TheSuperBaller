@@ -18,6 +18,11 @@ var accept_input = false
 	$PlayerPlatform12,
 	$PlayerPlatform13,
 	$PlayerPlatform14,
+	$PlayerPlatform15,
+	$PlayerPlatform16,
+	$PlayerPlatform17,
+	$PlayerPlatform18,
+	$PlayerPlatform19,
 ]
 
 var hats = [
@@ -36,7 +41,9 @@ var hats = [
 	"chicken_hat",
 	"none",
 	"none",
-	"none"
+	"none",
+	"none",
+	"none",
 ]
 
 
