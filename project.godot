@@ -26,10 +26,6 @@ driver/output_latency=100
 PlayerData="*uid://ykroixqdbkka"
 ItemData="*uid://c0og8inputf1q"
 
-[display]
-
-window/size/mode=3
-
 [global_group]
 
 input_receiver=""

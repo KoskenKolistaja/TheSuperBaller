@@ -16,5 +16,9 @@ var hats = {
 	"traffic_cone" : preload("res://Entities/Hats/traffic_cone.tscn"),
 	"viking_helmet" : preload("res://Entities/Hats/viking_helmet.tscn"),
 	"chicken_hat" : preload("res://Entities/Hats/chicken_hat.tscn"),
+	"party_hat" : preload("res://Entities/Hats/party_hat.tscn"),
+	"chef_hat" : preload("res://Entities/Hats/chef_hat.tscn"),
 	"none" : preload("res://Entities/Hats/none.tscn"),
+	"none2" : preload("res://Entities/Hats/none.tscn"),
+	"none3" : preload("res://Entities/Hats/none.tscn")
 }

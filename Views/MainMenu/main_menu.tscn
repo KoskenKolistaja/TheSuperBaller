@@ -166,19 +166,16 @@ transform = Transform3D(-0.50000006, 0, -0.8660254, 0, 1, 0, 0.8660254, 0, -0.50
 transform = Transform3D(-0.64278764, 0, -0.76604444, 0, 1, 0, 0.76604444, 0, -0.64278764, 0, -4, 14)
 
 [node name="PlayerPlatform15" parent="3DWorldMenu/PlayerPositionContainer" unique_id=372943339 instance=ExtResource("5_6582t")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, -8, -7)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, -8, -6)
 
 [node name="PlayerPlatform16" parent="3DWorldMenu/PlayerPositionContainer" unique_id=1647154881 instance=ExtResource("5_6582t")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, -8, -3)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, -8, -2)
 
-[node name="PlayerPlatform17" parent="3DWorldMenu/PlayerPositionContainer" unique_id=1791602445 instance=ExtResource("5_6582t")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, -8, 1)
+[node name="PlayerPlatform17" parent="3DWorldMenu/PlayerPositionContainer" unique_id=288066059 instance=ExtResource("5_6582t")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, -8, 2)
 
-[node name="PlayerPlatform18" parent="3DWorldMenu/PlayerPositionContainer" unique_id=1482112510 instance=ExtResource("5_6582t")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, -8, 5)
-
-[node name="PlayerPlatform19" parent="3DWorldMenu/PlayerPositionContainer" unique_id=1391447061 instance=ExtResource("5_6582t")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, -8, 9)
+[node name="PlayerPlatform18" parent="3DWorldMenu/PlayerPositionContainer" unique_id=1140257705 instance=ExtResource("5_6582t")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, -8, 6)
 
 [node name="PlayerProp" parent="3DWorldMenu" unique_id=1756207151 instance=ExtResource("6_6582t")]
 transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, -6, 0, 6)
@@ -293,9 +290,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -125.0
+offset_left = 174.0
 offset_top = -204.0
-offset_right = 125.0
+offset_right = 424.00006
 grow_horizontal = 2
 grow_vertical = 0
 

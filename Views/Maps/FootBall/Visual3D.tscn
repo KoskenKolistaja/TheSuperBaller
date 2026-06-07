@@ -824,6 +824,12 @@ transform = Transform3D(-4.371139e-08, -1, -4.371139e-08, 0, -4.3711392e-08, 1, 
 [node name="PlayerProp8" parent="PlayerPositions/RightTeamPositions" unique_id=1326678486 instance=ExtResource("1_t8yjp")]
 transform = Transform3D(-4.371139e-08, -1, -4.371139e-08, 0, -4.3711392e-08, 1, -1, 4.371139e-08, 0, 17, 4.7683716e-07, 9.536743e-07)
 
+[node name="PlayerProp9" parent="PlayerPositions/RightTeamPositions" unique_id=316389697 instance=ExtResource("1_t8yjp")]
+transform = Transform3D(-4.371139e-08, -1, -4.371139e-08, 0, -4.3711392e-08, 1, -1, 4.371139e-08, 0, 17, 0, 5)
+
+[node name="PlayerProp10" parent="PlayerPositions/RightTeamPositions" unique_id=1682417303 instance=ExtResource("1_t8yjp")]
+transform = Transform3D(-4.371139e-08, -1, -4.371139e-08, 0, -4.3711392e-08, 1, -1, 4.371139e-08, 0, 17, 0, -5)
+
 [node name="LeftTeamPositions" type="Node3D" parent="PlayerPositions" unique_id=267539103]
 unique_name_in_owner = true
 transform = Transform3D(-4.222196e-08, 0.25881907, -0.9659258, 5.502473e-08, 0.9659258, 0.25881907, 1, -4.222196e-08, -5.5024728e-08, -16, 0, 0)
@@ -852,6 +858,12 @@ transform = Transform3D(-4.371139e-08, -1, -4.371139e-08, 0, -4.3711392e-08, 1, 
 [node name="PlayerProp8" parent="PlayerPositions/LeftTeamPositions" unique_id=1566138704 instance=ExtResource("1_t8yjp")]
 transform = Transform3D(-4.371139e-08, -1, -4.371139e-08, 0, -4.3711392e-08, 1, -1, 4.371139e-08, 0, 17, 0, 0)
 
+[node name="PlayerProp9" parent="PlayerPositions/LeftTeamPositions" unique_id=852459821 instance=ExtResource("1_t8yjp")]
+transform = Transform3D(-4.371139e-08, -1, -4.371139e-08, 0, -4.3711392e-08, 1, -1, 4.371139e-08, 0, 17, 0, 5)
+
+[node name="PlayerProp10" parent="PlayerPositions/LeftTeamPositions" unique_id=1937003416 instance=ExtResource("1_t8yjp")]
+transform = Transform3D(-4.371139e-08, -1, -4.371139e-08, 0, -4.3711392e-08, 1, -1, 4.371139e-08, 0, 17, 0, -5)
+
 [node name="MatchInfo" type="Label3D" parent="PlayerPositions" unique_id=1096769018]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 5.682481e-07, 13)
@@ -879,14 +891,14 @@ bones/0/name = "Hips"
 bones/0/parent = -1
 bones/0/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7748004, 0)
 bones/0/enabled = true
-bones/0/position = Vector3(0, 0.769125, 0)
+bones/0/position = Vector3(0, 0.7746207, 0)
 bones/0/rotation = Quaternion(0, 0, 0, 1)
 bones/0/scale = Vector3(1, 1, 1)
 bones/1/name = "Leg.l"
 bones/1/parent = 0
 bones/1/rest = Transform3D(0, 0, -1, 0, -0.99999994, 0, -1, 0, 0, 0.3008049, -0.2380104, 3.0618021e-09)
 bones/1/enabled = true
-bones/1/position = Vector3(0.3008049, -0.23152427, 3.061802e-09)
+bones/1/position = Vector3(0.3008049, -0.2378051, 3.061802e-09)
 bones/1/rotation = Quaternion(0.7071068, 0, -0.7071068, 0)
 bones/1/scale = Vector3(1, 0.99999994, 1)
 bones/2/name = "Arm.l"
@@ -894,13 +906,13 @@ bones/2/parent = 0
 bones/2/rest = Transform3D(0, 1, -3.5527137e-15, -1, 0, 7.549791e-08, 7.549791e-08, -3.5527137e-15, 1, 0.97310555, 0.85715044, 2.2706327e-07)
 bones/2/enabled = true
 bones/2/position = Vector3(0.97310555, 0.87506163, 2.2706327e-07)
-bones/2/rotation = Quaternion(-3.4995985e-08, -1.3797071e-08, -0.9331942, 0.35937268)
+bones/2/rotation = Quaternion(-3.5156617e-08, -1.3736141e-08, -0.931521, 0.36368757)
 bones/2/scale = Vector3(1, 1, 1)
 bones/3/name = "Leg.r"
 bones/3/parent = 0
 bones/3/rest = Transform3D(0, 0, 1, 0, -0.99999994, 0, 1, 0, 0, -0.3008049, -0.2380104, 3.0618021e-09)
 bones/3/enabled = true
-bones/3/position = Vector3(-0.3008049, -0.23152427, 3.061802e-09)
+bones/3/position = Vector3(-0.3008049, -0.2378051, 3.061802e-09)
 bones/3/rotation = Quaternion(0.7071068, 0, 0.7071068, 0)
 bones/3/scale = Vector3(1, 0.99999994, 1)
 bones/4/name = "Arm.r"
@@ -908,7 +920,7 @@ bones/4/parent = 0
 bones/4/rest = Transform3D(0, -1, 3.5527137e-15, 1, 0, 7.549791e-08, -7.549791e-08, -3.5527137e-15, 1, -0.97310555, 0.85715044, 2.2706327e-07)
 bones/4/enabled = true
 bones/4/position = Vector3(-0.97310555, 0.87506163, 2.2706327e-07)
-bones/4/rotation = Quaternion(-3.4995985e-08, 1.3797071e-08, 0.9331942, 0.35937268)
+bones/4/rotation = Quaternion(-3.5156624e-08, 1.3736142e-08, 0.93152106, 0.36368763)
 bones/4/scale = Vector3(1, 1, 1)
 
 [node name="PlayerMesh" type="MeshInstance3D" parent="EliminatedPlayer/PartyCharacter/Armature/Skeleton3D" unique_id=1020888590]
@@ -920,7 +932,7 @@ skeleton = NodePath("..")
 surface_material_override/0 = SubResource("StandardMaterial3D_lxjvn")
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="EliminatedPlayer/PartyCharacter/Armature/Skeleton3D" unique_id=1672204951]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.769125, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7746207, 0)
 bone_name = "Hips"
 bone_idx = 0
 
