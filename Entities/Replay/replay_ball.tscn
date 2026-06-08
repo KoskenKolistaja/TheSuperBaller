@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://u30o1lrx6i3a"]
+
+[ext_resource type="Texture2D" uid="uid://dnu7h0ikgbcit" path="res://Assets/Textures/football-diffuse-512 (1).png" id="1_6vr72"]
+[ext_resource type="Script" uid="uid://bf83ybjjs5k3w" path="res://Entities/Replay/replay_ball.gd" id="1_41rfy"]
+[ext_resource type="Texture2D" uid="uid://bofk74ohw64rk" path="res://Assets/Textures/football-normals-512.png" id="2_41rfy"]
+[ext_resource type="AudioStream" uid="uid://do8y03flct8mw" path="res://Assets/SFX/RockHit.ogg" id="3_d2n3s"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fr0ii"]
+albedo_texture = ExtResource("1_6vr72")
+normal_enabled = true
+normal_scale = 2.15
+normal_texture = ExtResource("2_41rfy")
+
+[sub_resource type="SphereMesh" id="SphereMesh_dc2qd"]
+material = SubResource("StandardMaterial3D_fr0ii")
+radius = 1.0
+height = 2.0
+
+[node name="ReplayBall" type="Node3D" unique_id=579961322]
+script = ExtResource("1_41rfy")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=64577443]
+layers = 256
+mesh = SubResource("SphereMesh_dc2qd")
+
+[node name="KickSFX" type="AudioStreamPlayer" parent="." unique_id=20464749]
+unique_name_in_owner = true
+stream = ExtResource("3_d2n3s")
+volume_db = 10.0

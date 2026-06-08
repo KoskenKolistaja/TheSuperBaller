@@ -46,4 +46,5 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_uwwhf")
 
 [node name="FurCap" type="MeshInstance3D" unique_id=1882729356]
+layers = 257
 mesh = SubResource("ArrayMesh_8wdu2")

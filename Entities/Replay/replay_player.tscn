@@ -1,9 +1,8 @@
-[gd_scene format=4 uid="uid://bki2a6tmumhy8"]
+[gd_scene format=4 uid="uid://bq6q51uewo0ja"]
 
-[ext_resource type="Script" uid="uid://bpms0wxaxpko3" path="res://Entities/PlayerCharacter/player.gd" id="1_exqjt"]
-[ext_resource type="Script" uid="uid://bamsdts2akal7" path="res://Entities/Props/player_prop_face.gd" id="3_oktro"]
-[ext_resource type="Script" uid="uid://bux2eacob72ge" path="res://Entities/Props/hat_slot.gd" id="3_yjbir"]
-[ext_resource type="PackedScene" uid="uid://ccv1vuylbchl0" path="res://Entities/PlayerCharacter/football_actions.tscn" id="9_yjbir"]
+[ext_resource type="Script" uid="uid://bamsdts2akal7" path="res://Entities/Props/player_prop_face.gd" id="1_w8ax7"]
+[ext_resource type="Script" uid="uid://dajdsjmfavufd" path="res://Entities/Replay/replay_player.gd" id="1_yw8u3"]
+[ext_resource type="Script" uid="uid://bux2eacob72ge" path="res://Entities/Props/hat_slot.gd" id="2_yw8u3"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sb64x"]
 resource_name = "Material.001"
@@ -11,7 +10,7 @@ cull_mode = 2
 albedo_color = Color(0.90758795, 0.35184732, 0.41784716, 1)
 roughness = 0.27952754
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_kv7ea"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_s54h5"]
 resource_name = "PartyCharacter2_Cube_001"
 _surfaces = [{
 "aabb": AABB(-1.6745706, -0.034076452, -0.91666675, 3.3491411, 3.1906211, 1.8333335),
@@ -31,7 +30,7 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
-[sub_resource type="Skin" id="Skin_306ra"]
+[sub_resource type="Skin" id="Skin_ifo1g"]
 resource_name = "Skin"
 bind_count = 13
 bind/0/name = &"Hips"
@@ -74,7 +73,7 @@ bind/12/name = &"LegExtension.l"
 bind/12/bone = -1
 bind/12/pose = Transform3D(1.9470744e-07, -4.235166e-22, 1.0000012, 1.1920925e-07, -1.0000004, -4.4958907e-07, 1.0000001, -4.8646502e-29, -3.6197434e-07, -5.7517475e-08, -0.038894042, -0.29540464)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b5pkh"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_06rvm"]
 resource_local_to_scene = true
 roughness = 0.4
 
@@ -84,7 +83,7 @@ cull_mode = 2
 albedo_color = Color(0, 0, 0, 1)
 roughness = 0.42913386
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_rdlhu"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_ia0fo"]
 resource_name = "PartyCharacter_Cube_004"
 _blend_shape_names = PackedStringArray("Smile", "Laugh", "Frown", "Surprised")
 _surfaces = [{
@@ -107,7 +106,7 @@ metadata/extras = {
 "targetNames": ["Smile", "Laugh", "Frown", "Surprised"]
 }
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_yjbir"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_kn2fy"]
 resource_name = "PartyCharacter_Cube_005"
 _blend_shape_names = PackedStringArray("Closed")
 _surfaces = [{
@@ -130,7 +129,7 @@ metadata/extras = {
 "targetNames": ["Closed"]
 }
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_oktro"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_qlm8n"]
 resource_name = "PartyCharacter_Cube_006"
 _blend_shape_names = PackedStringArray("Sad", "Angry", "Surprised")
 _surfaces = [{
@@ -336,42 +335,29 @@ tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = PackedFloat32Array(0, 1, -0.17163703, 0.013463922, 0.35455114, 0.91905004, 0.033333335, 1, -0.17163703, 0.013463922, 0.35455114, 0.91905004, 0.06666667, 1, -0.17252472, 0.010684565, 0.34162682, 0.9238031, 0.1, 1, -0.17460106, 0.0037028762, 0.30890653, 0.9349212, 0.13333334, 1, -0.1775624, -0.0078777205, 0.25383204, 0.950778, 0.16666667, 1, -0.18057948, -0.02337488, 0.17856207, 0.9669334, 0.2, 1, -0.18276353, -0.04228267, 0.08424241, 0.97862816, 0.23333333, 1, -0.18320781, -0.061733834, -0.015778825, 0.9810071, 0.26666668, 1, -0.18178795, -0.0802424, -0.11401057, 0.97340435, 0.3, 1, -0.17886314, -0.09657941, -0.2034908, 0.95774317, 0.33333334, 1, -0.17517184, -0.10983783, -0.27829552, 0.9379777, 0.36666667, 1, -0.172142, -0.11821988, -0.32674274, 0.921754, 0.4, 1, -0.17037806, -0.12246542, -0.35166192, 0.91230893, 0.43333334, 1, -0.17026062, -0.122734696, -0.35325164, 0.9116802, 0.46666667, 1, -0.17171974, -0.11927219, -0.33289438, 0.9194932, 0.5, 1, -0.17429218, -0.11244149, -0.2932423, 0.93326753, 0.53333336, 1, -0.17762268, -0.10156784, -0.23138957, 0.951101, 0.56666666, 1, -0.18061158, -0.08797799, -0.15603352, 0.9671055, 0.6, 1, -0.18263946, -0.07218217, -0.07084507, 0.97796404, 0.6333333, 1, -0.18326846, -0.054932088, 0.019555423, 0.9813321, 0.6666667, 1, -0.1823431, -0.037216093, 0.10979017, 0.976377, 0.7, 1, -0.18019764, -0.021057284, 0.18993385, 0.96488893, 0.73333335, 1, -0.17743126, -0.007309955, 0.2565555, 0.95007586, 0.76666665, 1, -0.17469472, 0.0033694024, 0.30733454, 0.93542284, 0.8, 1, -0.17260017, 0.010442997, 0.3405007, 0.92420745, 0.8333333, 1, -0.17163703, 0.013463922, 0.35455114, 0.91905004)
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_0fe6x"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_s1caq"]
 _data = {
 &"Idle": SubResource("Animation_g2mg3"),
 &"Walk": SubResource("Animation_rdwxu"),
 &"Walk_002": SubResource("Animation_gpyg0")
 }
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rdlhu"]
-radius = 1.003418
-height = 3.3479004
+[node name="ReplayPlayer" type="Node3D" unique_id=1730196320]
+script = ExtResource("1_yw8u3")
 
-[node name="Player" type="RigidBody3D" unique_id=1429969274 node_paths=PackedStringArray("action_item") groups=["player"]]
-collision_layer = 9
-collision_mask = 9
-axis_lock_angular_x = true
-axis_lock_angular_y = true
-axis_lock_angular_z = true
-mass = 2.0
-angular_damp = 1.0
-script = ExtResource("1_exqjt")
-action_item = NodePath("Visual/ActionItemContainer/FootballActions")
+[node name="Visual" type="Node3D" parent="." unique_id=816688043]
 
-[node name="Visual" type="Node3D" parent="." unique_id=597793643]
-unique_name_in_owner = true
+[node name="Armature" type="Node3D" parent="Visual" unique_id=1243857298]
 
-[node name="Armature" type="Node3D" parent="Visual" unique_id=786359298]
+[node name="Cube_001" type="Node3D" parent="Visual/Armature" unique_id=1939922596]
 
-[node name="Cube_001" type="Node3D" parent="Visual/Armature" unique_id=544502516]
-
-[node name="Skeleton3D" type="Skeleton3D" parent="Visual/Armature" unique_id=745765258]
+[node name="Skeleton3D" type="Skeleton3D" parent="Visual/Armature" unique_id=68946523]
 bones/0/name = "Hips"
 bones/0/parent = -1
 bones/0/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6111411, 0)
 bones/0/enabled = true
 bones/0/position = Vector3(0, 0.6111411, 0)
-bones/0/rotation = Quaternion(0, 0, 0.0450762, 0.99898356)
+bones/0/rotation = Quaternion(0, 0, 0, 1)
 bones/0/scale = Vector3(1, 1, 1)
 bones/1/name = "Shoulder.r"
 bones/1/parent = 0
@@ -385,7 +371,7 @@ bones/2/parent = 1
 bones/2/rest = Transform3D(0.91516334, -0.40308326, -3.9781344e-07, 0.40308326, 0.91516334, -2.7760245e-07, 4.7596114e-07, 9.369968e-08, 1, -8.9406946e-08, 1.0235919, 1.4210855e-14)
 bones/2/enabled = true
 bones/2/position = Vector3(-8.9406946e-08, 1.0235919, 1.4210855e-14)
-bones/2/rotation = Quaternion(-2.8018885e-08, -2.4858815e-07, 0.5699499, 0.8216794)
+bones/2/rotation = Quaternion(-3.2370952e-08, -2.4877417e-07, 0.58141357, 0.8136082)
 bones/2/scale = Vector3(1, 1, 1)
 bones/3/name = "ArmExtension.r"
 bones/3/parent = 2
@@ -406,7 +392,7 @@ bones/5/parent = 4
 bones/5/rest = Transform3D(0.91516334, 0.40308326, 3.9781344e-07, -0.40308326, 0.91516334, -2.7760245e-07, -4.7596114e-07, 9.369968e-08, 1, 8.9406946e-08, 1.0235919, 1.4210855e-14)
 bones/5/enabled = true
 bones/5/position = Vector3(8.9406946e-08, 1.0235919, 1.4210855e-14)
-bones/5/rotation = Quaternion(-3.947401e-08, 2.4897304e-07, -0.5999133, 0.8000651)
+bones/5/rotation = Quaternion(-3.2370952e-08, 2.4877417e-07, -0.58141357, 0.8136082)
 bones/5/scale = Vector3(1, 1, 1)
 bones/6/name = "ArmExtension.l"
 bones/6/parent = 5
@@ -427,7 +413,7 @@ bones/8/parent = 7
 bones/8/rest = Transform3D(1, 3.7181852e-08, 9.863189e-08, -7.027404e-08, 0.93259597, 0.36092162, -7.8563986e-08, -0.36092156, 0.93259615, -3.2689545e-15, 0.8184731, 1.4901161e-08)
 bones/8/enabled = true
 bones/8/position = Vector3(-3.2689545e-15, 0.8184731, 1.4901161e-08)
-bones/8/rotation = Quaternion(-0.16973674, 0.123917855, 0.36024982, 0.90887505)
+bones/8/rotation = Quaternion(-0.18358083, 4.506488e-08, -2.732844e-08, 0.9830046)
 bones/8/scale = Vector3(1, 0.9999998, 1)
 bones/9/name = "LegExtension.r"
 bones/9/parent = 8
@@ -448,7 +434,7 @@ bones/11/parent = 10
 bones/11/rest = Transform3D(1, -3.7181852e-08, -9.863189e-08, 7.027404e-08, 0.93259597, 0.36092162, 7.8563986e-08, -0.36092156, 0.93259615, 3.2689545e-15, 0.8184731, 1.4901161e-08)
 bones/11/enabled = true
 bones/11/position = Vector3(3.2689545e-15, 0.8184731, 1.4901161e-08)
-bones/11/rotation = Quaternion(-0.17163704, 0.013463922, 0.35455114, 0.9190501)
+bones/11/rotation = Quaternion(-0.18358083, -4.506488e-08, 2.732844e-08, 0.9830046)
 bones/11/scale = Vector3(1, 0.9999998, 1)
 bones/12/name = "LegExtension.l"
 bones/12/parent = 11
@@ -458,54 +444,57 @@ bones/12/position = Vector3(-1.9229977e-15, 0.51959574, 0)
 bones/12/rotation = Quaternion(-5.6827335e-16, -7.81597e-14, -5.199555e-15, 1)
 bones/12/scale = Vector3(1, 0.99999994, 1)
 
-[node name="Cube" type="MeshInstance3D" parent="Visual/Armature/Skeleton3D" unique_id=602067565]
+[node name="Cube" type="MeshInstance3D" parent="Visual/Armature/Skeleton3D" unique_id=392681355]
 unique_name_in_owner = true
-mesh = SubResource("ArrayMesh_kv7ea")
-skin = SubResource("Skin_306ra")
+layers = 257
+mesh = SubResource("ArrayMesh_s54h5")
+skin = SubResource("Skin_ifo1g")
 skeleton = NodePath("..")
-surface_material_override/0 = SubResource("StandardMaterial3D_b5pkh")
+surface_material_override/0 = SubResource("StandardMaterial3D_06rvm")
 
-[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Visual/Armature/Skeleton3D" unique_id=676254066]
-transform = Transform3D(0.9959363, -0.09006076, 0, 0.09006076, 0.9959363, 0, 0, 0, 1, 0, 0.6111411, 0)
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Visual/Armature/Skeleton3D" unique_id=138813155]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6111411, 0)
 bone_name = "Hips"
 bone_idx = 0
 
-[node name="Face" type="Node3D" parent="Visual/Armature/Skeleton3D/BoneAttachment3D" unique_id=1957129697]
+[node name="Face" type="Node3D" parent="Visual/Armature/Skeleton3D/BoneAttachment3D" unique_id=162460805]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5314, 0)
-script = ExtResource("3_oktro")
+script = ExtResource("1_w8ax7")
 
-[node name="Mouth" type="MeshInstance3D" parent="Visual/Armature/Skeleton3D/BoneAttachment3D/Face" unique_id=109628173]
-mesh = SubResource("ArrayMesh_rdlhu")
+[node name="Mouth" type="MeshInstance3D" parent="Visual/Armature/Skeleton3D/BoneAttachment3D/Face" unique_id=1791362006]
+layers = 257
+mesh = SubResource("ArrayMesh_ia0fo")
 blend_shapes/Smile = -1.0
 blend_shapes/Laugh = 1.0
 blend_shapes/Frown = 1.0
 blend_shapes/Surprised = 0.0
 
-[node name="Eyes" type="MeshInstance3D" parent="Visual/Armature/Skeleton3D/BoneAttachment3D/Face" unique_id=2119563543]
-mesh = SubResource("ArrayMesh_yjbir")
+[node name="Eyes" type="MeshInstance3D" parent="Visual/Armature/Skeleton3D/BoneAttachment3D/Face" unique_id=1945435251]
+layers = 257
+mesh = SubResource("ArrayMesh_kn2fy")
 blend_shapes/Closed = 0.0
 
-[node name="Brows" type="MeshInstance3D" parent="Visual/Armature/Skeleton3D/BoneAttachment3D/Face" unique_id=580132121]
-mesh = SubResource("ArrayMesh_oktro")
+[node name="Brows" type="MeshInstance3D" parent="Visual/Armature/Skeleton3D/BoneAttachment3D/Face" unique_id=1924661271]
+layers = 257
+mesh = SubResource("ArrayMesh_qlm8n")
 blend_shapes/Sad = 0.30303
 blend_shapes/Angry = 0.0
 blend_shapes/Surprised = 0.415
 
-[node name="HatSlot" type="Node3D" parent="Visual/Armature/Skeleton3D/BoneAttachment3D" unique_id=742651522]
+[node name="HatSlot" type="Node3D" parent="Visual/Armature/Skeleton3D/BoneAttachment3D" unique_id=696621048]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.57112396, 0)
-script = ExtResource("3_yjbir")
+script = ExtResource("2_yw8u3")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Visual" unique_id=8199011]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Visual" unique_id=1329785657]
 unique_name_in_owner = true
-libraries/ = SubResource("AnimationLibrary_0fe6x")
+libraries/ = SubResource("AnimationLibrary_s1caq")
 autoplay = &"Idle"
 
-[node name="ActionItemContainer" type="Node3D" parent="Visual" unique_id=514426829]
-
-[node name="FootballActions" parent="Visual/ActionItemContainer" unique_id=2135135668 node_paths=PackedStringArray("player") instance=ExtResource("9_yjbir")]
-player = NodePath("../../..")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1247550687]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6691827, 0)
-shape = SubResource("CapsuleShape3D_rdlhu")
+[node name="NameLabel" type="Label3D" parent="." unique_id=473303346]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.7385173, 0)
+layers = 257
+billboard = 1
+text = "Andrea"
+font_size = 128

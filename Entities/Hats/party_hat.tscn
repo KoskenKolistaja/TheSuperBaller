@@ -58,5 +58,6 @@ albedo_color = Color(0.29999995, 1, 0, 1)
 script = ExtResource("1_5ygp0")
 
 [node name="PartyHat" type="MeshInstance3D" parent="." unique_id=255873258]
+layers = 257
 mesh = SubResource("ArrayMesh_8y06n")
 surface_material_override/0 = SubResource("StandardMaterial3D_sj5h0")

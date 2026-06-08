@@ -3,8 +3,10 @@ extends Node3D
 @export var bomb : PackedScene
 @export var player_scene : PackedScene
 
+signal shortcut
+
 var match_number = 0
-var match_time = 120
+var match_time = 20
 var winner_dictionary = {}
 
 var left_team_score : int = 0
@@ -34,6 +36,9 @@ var rr_matches : Array = []
 var rr_leaderboard : Dictionary = {} 
 var rr_goals_diff : Dictionary = {} # New: Tracks { player_id: goals_scored - goals_conceded }
 
+var last_toucher_name = null
+
+var rotating = true
 
 func setup(exported_player_ids, exported_hats, exported_names):
 	player_ids = exported_player_ids
@@ -375,16 +380,18 @@ func setup_group_match():
 	%MatchTimer.wait_time = match_time
 
 
-func setup_lineup(left_team, right_team):
+func delete_players():
 	for c in %PlayerContainer.get_children():
 		c.queue_free()
 	for c in %LeftTeamPositions.get_children():
 		c.hide()
 	for c in %RightTeamPositions.get_children():
 		c.hide()
-	
 	left_team_players.clear()
 	right_team_players.clear()
+
+
+func setup_lineup(left_team, right_team):
 	
 	for id in left_team:
 		var player_position_node = get_first_hidden_left()
@@ -392,6 +399,7 @@ func setup_lineup(left_team, right_team):
 		var player_instance = player_scene.instantiate()
 		player_instance.set_color(Color(1, 0.5, 0.5))
 		player_instance.player_id = id
+		player_instance.name = PlayerData.get_player_name(id)
 		player_instance.set_hat(left_team[id]["hat"])
 		player_position_node.show()
 		%PlayerContainer.add_child(player_instance)
@@ -434,23 +442,26 @@ func reset_player_positions():
 
 
 func start_match():
+	last_toucher_name = null
+	rotating = false
 	move_ball_to_center()
 	$FootBall.freeze = true
 	golden_goal = false
 	%MatchTimer.wait_time = match_time
 	left_team_score = 0
 	right_team_score = 0
-	%Visual3D.hide()
+	%UI3D.hide()
 	%MatchMusic.play()
 	%IdleMusic.stop()
+	ReplayManager.init_replay()
 	await get_tree().create_timer(2.88).timeout
+	ReplayManager.recording = true
 	%WhistleSFX.play()
 	active = true
 	activate_players()
 	%MatchTimer.start()
 	$FootBall.freeze = false
 	move_ball_to_center()
-
 
 func activate_players():
 	for c in %PlayerContainer.get_children():
@@ -463,6 +474,7 @@ func deactivate_players():
 
 
 func match_over():
+	ReplayManager.recording = false
 	active = false
 	%WinJingle.play()
 	if last_match:
@@ -474,15 +486,36 @@ func match_over():
 	%OvertimeMusic.stop()
 	%MatchTimer.stop()
 	await get_tree().create_timer(10).timeout
+	rotating = true
 	$SuperBaller.stop()
 	$MatchOver.stop()
 	process_match_losers()
-	%IdleMusic.play()
-	%Visual3D.show()
+	%ReplayMusic.play()
+	%UI3D.show()
 	%Visual3D.hide_lineup()
-	await get_tree().create_timer(10).timeout
+	delete_players()
+	await shortcut
+	%UI3D.hide()
+	%ReplayOverlay.show()
+	activate_replay_camera()
+	play_highlights()
+	await shortcut
+	%Replayer.stop_replay()
+	%UI3D.show()
+	%ReplayOverlay.hide_overlay()
+	%ReplayMusic.stop()
+	%IdleMusic.play()
+	activate_normal_camera()
 	setup_next_match()
 	%StartButton.show()
+
+func play_highlights():
+	if ReplayManager.saved_highlights.is_empty():
+		print("No highlights saved yet!")
+		return
+		
+	%Replayer.init_replay(ReplayManager.saved_highlights)
+	%Replayer.playing = true
 
 
 func _physics_process(delta):
@@ -490,7 +523,23 @@ func _physics_process(delta):
 	%PointTable.update_scores(left_team_score, right_team_score)
 	if Input.is_action_just_pressed("force_match_over"):
 		force_match_over()
+	
+	if rotating:
+		%CinematicCameraPivot.rotation_degrees.y += 0.1
+	else:
+		%CinematicCameraPivot.rotation_degrees.y = 0
+	
+	if Input.is_action_just_pressed("ui_accept"):
+		shortcut.emit()
 
+
+func activate_normal_camera():
+	%NormalCamera.current = true
+	%ReplayCamera.current = false
+
+func activate_replay_camera():
+	%NormalCamera.current = false
+	%ReplayCamera.current = true
 
 func force_match_over():
 	if randf_range(0, 1) < 0.5:
@@ -518,7 +567,7 @@ func left_team_scored():
 	move_ball_to_center()
 	if golden_goal:
 		match_over()
-
+	ReplayManager.capture_highlight(last_toucher_name + " scored " + str(left_team_score) +" - " + str(right_team_score) + " goal" , 5.0)
 
 func right_team_scored():
 	if not active:
@@ -530,7 +579,7 @@ func right_team_scored():
 	move_ball_to_center()
 	if golden_goal:
 		match_over()
-
+	ReplayManager.capture_highlight(last_toucher_name + " scored " + str(left_team_score) +" - " + str(right_team_score) + " goal" , 5.0)
 
 func update_point_table():
 	%PointTable.update_scores(left_team_score, right_team_score)
@@ -572,3 +621,6 @@ func spawn_bomb():
 func _on_start_button_pressed():
 	start_match()
 	%StartButton.hide()
+
+func update_last_touch(player):
+	last_toucher_name = player.name

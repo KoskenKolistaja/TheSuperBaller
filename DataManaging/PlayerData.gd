@@ -23,6 +23,8 @@ func get_player_character(exp_id):
 	else:
 		return player_characters[exp_id]["character"]
 
+func get_player_name(exp_id):
+	return player_names[exp_id]
 
 func init_player_data():
 	player_characters = {}

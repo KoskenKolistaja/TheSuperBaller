@@ -25,6 +25,8 @@ driver/output_latency=100
 
 PlayerData="*uid://ykroixqdbkka"
 ItemData="*uid://c0og8inputf1q"
+ReplayManager="*uid://b7r3dtbsrwrbu"
+MetaData="*uid://38sxoq23x65u"
 
 [global_group]
 

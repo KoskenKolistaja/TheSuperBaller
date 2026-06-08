@@ -48,4 +48,5 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_mhi6b")
 
 [node name="TopHat" type="MeshInstance3D" unique_id=995545212]
+layers = 257
 mesh = SubResource("ArrayMesh_mnleu")

@@ -43,4 +43,5 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_v7pfc")
 
 [node name="TrafficCone" type="MeshInstance3D" unique_id=1799950041]
+layers = 257
 mesh = SubResource("ArrayMesh_awy2n")

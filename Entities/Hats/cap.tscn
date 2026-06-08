@@ -52,5 +52,6 @@ shadow_mesh = SubResource("ArrayMesh_kkmh3")
 albedo_texture = ExtResource("3_qmld6")
 
 [node name="Cap" type="MeshInstance3D" unique_id=186467978]
+layers = 257
 mesh = SubResource("ArrayMesh_3tddd")
 surface_material_override/0 = SubResource("StandardMaterial3D_3tddd")

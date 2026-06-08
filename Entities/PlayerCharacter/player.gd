@@ -12,6 +12,8 @@ var player_name
 
 var initial_position : Vector3
 
+var current_hat = null
+
 enum PlayerState {
 	NORMAL,
 	EXPLODED
@@ -82,7 +84,9 @@ func _physics_process(delta):
 			rotate_visual(delta)
 
 
-
+func _ready():
+	await get_tree().physics_frame
+	name = PlayerData.get_player_name(player_id)
 
 
 
@@ -273,6 +277,7 @@ func simulate_buttons():
 
 func set_hat(hat_name : String):
 	var hat_instance = ItemData.hats[hat_name].instantiate()
+	current_hat = hat_name
 	%HatSlot.add_child(hat_instance)
 
 func set_color(exported_color):
@@ -280,6 +285,25 @@ func set_color(exported_color):
 	var mat : StandardMaterial3D = mesh.get_surface_override_material(0)
 	mat.albedo_color = exported_color
 
+func get_color() -> Color:
+	var mesh : MeshInstance3D = %Cube
+	var mat : StandardMaterial3D = mesh.get_surface_override_material(0)
+	return mat.albedo_color
+
 func deactivate():
 	active = false
 	%AnimationPlayer.play("Idle")
+
+func get_replay_state() -> Dictionary:
+	var returned = {}
+	returned["position"] = global_position
+	returned["rotation"] = %Visual.global_rotation
+	returned["animation"] = %AnimationPlayer.assigned_animation
+	return returned
+
+func get_appearance():
+	var returned = {}
+	returned["color"] = get_color()
+	returned["hat"] = current_hat
+	returned["name"] = name
+	return returned

@@ -48,4 +48,5 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_unpj8")
 
 [node name="Fedora" type="MeshInstance3D" unique_id=1703957149]
+layers = 257
 mesh = SubResource("ArrayMesh_ydd5o")

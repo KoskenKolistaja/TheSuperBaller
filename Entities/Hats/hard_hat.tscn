@@ -46,5 +46,6 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_7k7uo")
 
 [node name="HardHat" type="MeshInstance3D" unique_id=1580323823]
+layers = 257
 mesh = SubResource("ArrayMesh_lftge")
 metadata/_edit_lock_ = true

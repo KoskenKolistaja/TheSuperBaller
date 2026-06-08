@@ -15,8 +15,6 @@ func _ready():
 	
 	PlayerData.init_player_data()
 	
-	await get_tree().create_timer(1).timeout
-	DisplayServer.tts_speak("Who is ready to be the super baller?", voice_id,100,0.5,.8)
 
 
 func change_to_menu():
@@ -92,3 +90,8 @@ func _on_back_button_pressed():
 
 func _on_exit_button_pressed():
 	get_tree().quit()
+
+
+func _on_replays_button_pressed():
+	get_parent().change_to_replays()
+	self.queue_free()

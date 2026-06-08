@@ -51,4 +51,5 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_tkbr6")
 
 [node name="VikingHelmet" type="MeshInstance3D" unique_id=1672910208]
+layers = 257
 mesh = SubResource("ArrayMesh_2uotl")

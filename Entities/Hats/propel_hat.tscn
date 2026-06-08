@@ -78,11 +78,10 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_a6ae8")
 
 [node name="PropelHat" type="MeshInstance3D" unique_id=1244236169]
+layers = 257
 mesh = SubResource("ArrayMesh_y2coe")
 script = ExtResource("2_y2coe")
 
 [node name="Propel" type="MeshInstance3D" parent="." unique_id=1996270502]
+layers = 257
 mesh = SubResource("ArrayMesh_btau2")
-
-[node name="Camera3D" type="Camera3D" parent="." unique_id=2089887708]
-transform = Transform3D(0.6833007, -0.38851058, 0.6181907, 0, 0.84667754, 0.53210634, -0.7301371, -0.36358863, 0.5785353, 3.3366594, 4.9774246, 3.0240746)

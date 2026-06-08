@@ -41,4 +41,5 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_hrxfg")
 
 [node name="Hair2" type="MeshInstance3D" unique_id=76450752]
+layers = 257
 mesh = SubResource("ArrayMesh_2p2oe")

@@ -35,3 +35,4 @@ func spawn_player(exported_player_id,hat : String):
 	var p_instance = player_prop.instantiate()
 	%PlayerContainer.add_child(p_instance)
 	p_instance.set_hat(hat)
+	show()

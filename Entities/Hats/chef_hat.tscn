@@ -37,4 +37,5 @@ shadow_mesh = SubResource("ArrayMesh_g77uh")
 [node name="ChefHat" type="Node3D" unique_id=303015526]
 
 [node name="ChefHat" type="MeshInstance3D" parent="." unique_id=210699746]
+layers = 257
 mesh = SubResource("ArrayMesh_dtbyy")

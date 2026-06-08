@@ -43,4 +43,5 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_lnp4n")
 
 [node name="MeshInstance3D" type="MeshInstance3D" unique_id=1144761002]
+layers = 257
 mesh = SubResource("ArrayMesh_pn76o")

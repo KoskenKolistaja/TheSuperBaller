@@ -3,6 +3,7 @@ extends Node
 @export var match_scene : PackedScene
 @export var winner_scene : PackedScene
 @export var menu_scene : PackedScene
+@export var replay_scene : PackedScene
 
 func _ready():
 	randomize()
@@ -23,3 +24,7 @@ func change_to_winner_scene(player_dictionary):
 	var winner_scene_instance = winner_scene.instantiate()
 	add_child(winner_scene_instance)
 	winner_scene_instance.setup(player_dictionary)
+
+func change_to_replays():
+	var replay_scene_instance = replay_scene.instantiate()
+	add_child(replay_scene_instance)

@@ -42,5 +42,6 @@ shadow_mesh = SubResource("ArrayMesh_4tg7y")
 albedo_color = Color(0.20871013, 0.20871016, 0.20871013, 1)
 
 [node name="Headset" type="MeshInstance3D" unique_id=1648034797]
+layers = 257
 mesh = SubResource("ArrayMesh_f0ct5")
 surface_material_override/0 = SubResource("StandardMaterial3D_gwrdd")
