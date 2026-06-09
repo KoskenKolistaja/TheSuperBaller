@@ -40,7 +40,8 @@ func init_replay(custom_clip_data = null):
 	dictionaries.clear()
 	playback_data.clear() 
 	cleanup_replay() 
-	replay_overlay.set_text("Nothing interesting happened...")
+	if replay_overlay:
+		replay_overlay.set_text("Nothing interesting happened...")
 	# Reset playlist tracking
 	highlight_playlist.clear()
 	current_playlist_index = 0
