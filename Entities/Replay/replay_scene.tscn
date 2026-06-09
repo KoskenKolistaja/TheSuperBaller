@@ -6,6 +6,8 @@
 [ext_resource type="Script" uid="uid://dnocttikgrgjj" path="res://Views/Maps/FootBall/replayer.gd" id="4_203t5"]
 [ext_resource type="PackedScene" uid="uid://bq6q51uewo0ja" path="res://Entities/Replay/replay_player.tscn" id="5_og4mb"]
 [ext_resource type="PackedScene" uid="uid://u30o1lrx6i3a" path="res://Entities/Replay/replay_ball.tscn" id="6_56a1y"]
+[ext_resource type="AudioStream" uid="uid://bkdy8nlsnxcd5" path="res://Assets/Music/ReplayMusa.ogg" id="7_203t5"]
+[ext_resource type="PackedScene" uid="uid://7t131rhuw3oe" path="res://Entities/Replay/recording_button.tscn" id="7_og4mb"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ywutf"]
 resource_name = "Material"
@@ -58,6 +60,23 @@ background_mode = 2
 sky = SubResource("Sky_ali6h")
 ambient_light_sky_contribution = 0.16
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_203t5"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0, 0.5503255, 0.7960092, 0.827451)
+border_width_left = 5
+border_width_top = 1
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(1, 1, 1, 0.6745098)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
 [node name="ReplayScene" type="Control" unique_id=1191141526]
 layout_mode = 3
 anchors_preset = 15
@@ -66,6 +85,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_fsbg7")
+recording_button_scene = ExtResource("7_og4mb")
 
 [node name="World" type="Node3D" parent="." unique_id=1772641187]
 
@@ -122,12 +142,11 @@ transform = Transform3D(1, 0, 0, 0, 0.76040596, 0.64944804, 0, -0.64944804, 0.76
 cull_mask = 1048574
 fov = 69.0
 
-[node name="Replayer" type="Node3D" parent="World" unique_id=1714380473 node_paths=PackedStringArray("replay_overlay")]
+[node name="Replayer" type="Node3D" parent="World" unique_id=1714380473]
 unique_name_in_owner = true
 script = ExtResource("4_203t5")
 replay_player_scene = ExtResource("5_og4mb")
 replay_ball_scene = ExtResource("6_56a1y")
-replay_overlay = NodePath("")
 
 [node name="ReplayPlayers" type="Node3D" parent="World/Replayer" unique_id=429456031]
 unique_name_in_owner = true
@@ -147,15 +166,28 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_203t5")
 
-[node name="RecordingsContainer" type="VBoxContainer" parent="RecordingsPanel" unique_id=1521959962]
-unique_name_in_owner = true
+[node name="MarginContainer" type="MarginContainer" parent="RecordingsPanel" unique_id=210789475]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="ScrollContainer" type="ScrollContainer" parent="RecordingsPanel/MarginContainer" unique_id=702129957]
+layout_mode = 2
+
+[node name="RecordingsContainer" type="VBoxContainer" parent="RecordingsPanel/MarginContainer/ScrollContainer" unique_id=1521959962]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
 
 [node name="ExitButton" type="Button" parent="." unique_id=1354908301]
 layout_mode = 1
@@ -218,6 +250,10 @@ offset_top = -8.0
 grow_horizontal = 0
 grow_vertical = 0
 text = "EXIT"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=917314270]
+stream = ExtResource("7_203t5")
+autoplay = true
 
 [connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/TenthButton" to="." method="_on_tenth_button_pressed"]

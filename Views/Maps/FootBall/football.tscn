@@ -765,7 +765,7 @@ offset_bottom = 40.570015
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("7_0whdr")
 theme_override_font_sizes/font_size = 20
-text = "Andrea's Goal"
+text = "Nothin interesting happened..."
 
 [node name="SaveReplayButton" type="Button" parent="ReplayOverlay/MarginContainer/Panel" unique_id=1777057709]
 custom_minimum_size = Vector2(150, 50)

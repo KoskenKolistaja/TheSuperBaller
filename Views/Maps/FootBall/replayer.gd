@@ -31,10 +31,16 @@ func update_tick_interval(animation_speed):
 		p.update_animation_speed(animation_speed)
 
 func init_replay(custom_clip_data = null):
+	print(ReplayManager.saved_highlights.size())
+	
+	if custom_clip_data is Array:
+		print(custom_clip_data.size())
+		print(custom_clip_data.is_empty())
+	
 	dictionaries.clear()
 	playback_data.clear() 
 	cleanup_replay() 
-	
+	replay_overlay.set_text("Nothing interesting happened...")
 	# Reset playlist tracking
 	highlight_playlist.clear()
 	current_playlist_index = 0
@@ -43,18 +49,23 @@ func init_replay(custom_clip_data = null):
 	if custom_clip_data is Array:
 		# We received a whole playlist of clips!
 		highlight_playlist = custom_clip_data
+		print(highlight_playlist)
 		if highlight_playlist.is_empty():
+			print("HIGHLIGHT PLAYLIST IS EMPTY")
 			return
 		load_clip_from_playlist(0)
 	elif custom_clip_data is Dictionary and not custom_clip_data.is_empty():
 		# We received just a single raw clip dictionary
 		setup_clip_structures(custom_clip_data)
 	else:
+		push_error("WENT TO FALLBACK!" + str(ReplayManager.dictionaries))
 		# Default fallback: Play the entire recorded match history
 		setup_clip_structures(ReplayManager.dictionaries)
 
 func load_clip_from_playlist(index: int):
+	print("LOADING FROM PLAYLIST")
 	if highlight_playlist.is_empty():
+		print("IS ENPTY?")
 		return
 		
 	current_playlist_index = index % highlight_playlist.size()
@@ -152,13 +163,15 @@ func cleanup_replay():
 	playback_data.clear()
 
 	for player in %ReplayPlayers.get_children():
+		%ReplayPlayers.remove_child(player) # Remove immediately from tree queries
 		player.queue_free()
 
 	if ball_instance and is_instance_valid(ball_instance):
+		# Remove the ball immediately too
+		ball_instance.get_parent().remove_child(ball_instance)
 		ball_instance.queue_free()
 
 	ball_instance = null
-
 	tick_timer = 0.0
 
 

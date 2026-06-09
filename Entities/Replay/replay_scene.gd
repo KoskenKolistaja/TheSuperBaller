@@ -1,19 +1,42 @@
 extends Control
 
 
+@export var recording_button_scene : PackedScene
 
-
-
+var deleted = []
 
 func _ready():
+	update_recordings()
+
+
+func on_recording_deleted(recording_name):
+	ReplayManager.delete_recording(recording_name)
+	deleted.append(recording_name)
+	update_recordings()
+
+
+
+func update_recordings():
+	
+	for c in %RecordingsContainer.get_children():
+		c.queue_free()
+	
 	var recordings = ReplayManager.get_saved_recordings()
 	
 	for r in recordings:
-		var button = Button.new()
+		if deleted.has(r):
+			continue
+		
+		var button = recording_button_scene.instantiate()
 		button.name = r
 		button.text = r
+		
+		
+		button.connect("recording_deleted",on_recording_deleted,)
+		
 		%RecordingsContainer.add_child(button)
 		button.pressed.connect(start_replay.bind(r))
+
 
 func _on_exit_button_pressed():
 	%Replayer.cleanup_replay()

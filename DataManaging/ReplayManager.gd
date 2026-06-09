@@ -12,13 +12,14 @@ var recording = false
 
 var saved_highlights = []
 
+signal recording_deleted
+
 func init_replay():
 	print("Tried to init")
 	dictionaries.clear()
 	_node_to_id.clear()
 	index = 0 
 	
-	# Initialize ball entry OUTSIDE the player loop so it isn't overwritten
 	dictionaries["ball"] = []
 	
 	var players = get_tree().get_nodes_in_group("player")
@@ -29,6 +30,9 @@ func init_replay():
 		dictionaries[id] = {}
 		dictionaries[id]["states"] = []
 		dictionaries[id]["appearance"] = player.get_appearance()
+		
+	# FORCE an immediate frame snapshot so history arrays are never completely empty
+	tick()
 
 
 func _physics_process(delta):
@@ -151,3 +155,25 @@ func get_saved_recordings() -> Array[String]:
 			recording_names.append(clean_name)
 			
 	return recording_names
+
+## Deletes a saved recording file from the local appdata directory by name.
+func delete_recording(recording_name: String) -> bool:
+	var safe_name = recording_name.validate_filename()
+	var path = "user://" + safe_name + ".dat"
+	
+	# Check if the file actually exists before trying to delete it
+	if not FileAccess.file_exists(path):
+		print("Cannot delete, recording file does not exist: ", path)
+		recording_deleted.emit()
+		return false
+		
+	# Attempt to remove the file from the user:// directory
+	var error = DirAccess.remove_absolute(path)
+	if error != OK:
+		print("Failed to delete recording file (Error code: ", error, "): ", path)
+		recording_deleted.emit()
+		return false
+		
+	print("Successfully deleted recording: ", recording_name)
+	recording_deleted.emit()
+	return true

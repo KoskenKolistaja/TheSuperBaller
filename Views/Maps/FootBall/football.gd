@@ -6,7 +6,7 @@ extends Node3D
 signal shortcut
 
 var match_number = 0
-var match_time = 20
+var match_time = 10
 var winner_dictionary = {}
 
 var left_team_score : int = 0
@@ -473,6 +473,8 @@ func deactivate_players():
 		c.deactivate()
 
 
+# ... inside your Match Controller script ...
+
 func match_over():
 	ReplayManager.recording = false
 	active = false
@@ -485,6 +487,7 @@ func match_over():
 	%MatchMusic.stop()
 	%OvertimeMusic.stop()
 	%MatchTimer.stop()
+	
 	await get_tree().create_timer(10).timeout
 	rotating = true
 	$SuperBaller.stop()
@@ -494,17 +497,33 @@ func match_over():
 	%UI3D.show()
 	%Visual3D.hide_lineup()
 	delete_players()
+	
+	if has_node("FootBall"):
+		$FootBall.hide()
+		$FootBall.freeze = true
+
 	await shortcut
 	%UI3D.hide()
 	%ReplayOverlay.show()
 	activate_replay_camera()
+	
+	
+	# Pass the local data safely into your playback system
 	play_highlights()
+	
 	await shortcut
 	%Replayer.stop_replay()
+	# Removed the dangerous .clear() from here!
+	
 	%UI3D.show()
 	%ReplayOverlay.hide_overlay()
 	%ReplayMusic.stop()
 	%IdleMusic.play()
+	
+	if has_node("FootBall"):
+		$FootBall.show()
+		$FootBall.freeze = false
+		
 	activate_normal_camera()
 	setup_next_match()
 	%StartButton.show()
@@ -512,11 +531,12 @@ func match_over():
 func play_highlights():
 	if ReplayManager.saved_highlights.is_empty():
 		print("No highlights saved yet!")
+		%Replayer.init_replay(ReplayManager.dictionaries)
+		%Replayer.playing = true
 		return
-		
-	%Replayer.init_replay(ReplayManager.saved_highlights)
+	%Replayer.init_replay(ReplayManager.saved_highlights.duplicate())
 	%Replayer.playing = true
-
+	ReplayManager.saved_highlights.clear()
 
 func _physics_process(delta):
 	%PointTable.update_time(%MatchTimer.time_left)
