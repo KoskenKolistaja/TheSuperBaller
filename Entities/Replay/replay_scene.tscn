@@ -60,6 +60,21 @@ background_mode = 2
 sky = SubResource("Sky_ali6h")
 ambient_light_sky_contribution = 0.16
 
+[sub_resource type="GDScript" id="GDScript_og4mb"]
+script/source = "extends Node3D
+
+
+
+
+
+
+func _physics_process(delta):
+	if Input.is_action_pressed(\"ui_left\"):
+		rotation_degrees.y -= 1
+	if Input.is_action_pressed(\"ui_right\"):
+		rotation_degrees.y += 1
+"
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_203t5"]
 content_margin_left = 4.0
 content_margin_top = 4.0
@@ -135,6 +150,7 @@ shadow_blur = 2.863
 [node name="ReplayCameraPivot" type="Node3D" parent="World" unique_id=723989539]
 unique_name_in_owner = true
 transform = Transform3D(0.8099802, 0, -0.5864572, 0, 1, 0, 0.5864572, 0, 0.8099802, 0, 0, 0)
+script = SubResource("GDScript_og4mb")
 
 [node name="ReplayCamera" type="Camera3D" parent="World/ReplayCameraPivot" unique_id=338283160]
 unique_name_in_owner = true
@@ -255,6 +271,21 @@ text = "EXIT"
 stream = ExtResource("7_203t5")
 autoplay = true
 
+[node name="HSlider" type="HSlider" parent="." unique_id=52069724]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(1000, 100)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = -16.0
+offset_right = 4.0
+grow_horizontal = 2
+grow_vertical = 0
+
 [connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/TenthButton" to="." method="_on_tenth_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/HalfButton" to="." method="_on_half_button_pressed"]
@@ -262,3 +293,6 @@ autoplay = true
 [connection signal="pressed" from="HBoxContainer/DoubleButton" to="." method="_on_double_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/TripleButton" to="." method="_on_triple_button_pressed"]
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="drag_ended" from="HSlider" to="." method="_on_h_slider_drag_ended"]
+[connection signal="drag_started" from="HSlider" to="." method="_on_h_slider_drag_started"]
+[connection signal="value_changed" from="HSlider" to="." method="_on_h_slider_value_changed"]
