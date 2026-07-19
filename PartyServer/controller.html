@@ -54,23 +54,24 @@
         border-radius: 50%;
         position: absolute;
         display: flex; justify-content: center; align-items: center;
-        font-weight: bold; font-size: 28px;
-        box-shadow: 0 6px 0 #222;
+        font-weight: bold; font-size: 36px; /* Increased font size */
+        box-shadow: 0 8px 0 #222;
         transition: transform 0.1s, box-shadow 0.1s, background-color 0.1s;
         cursor: pointer;
     }
 
     .btn.pressed {
-        transform: translateY(6px);
+        transform: translateY(8px);
         box-shadow: 0 0 0 #222;
         background-color: #666;
     }
 
-    .action-btn { width: 120px; height: 120px; background-color: #8b3a3a; }
+    /* Increased button size from 120px to 150px */
+    .action-btn { width: 150px; height: 150px; background-color: #8b3a3a; }
     #btn-A { bottom: 20%; right: 15%; background-color: #3a8b3a; }
     #btn-B { right: 45%; bottom: 35%; background-color: #8b3a3a; }
 
-    /* D-Pad (Left Side) - Large Sliding Wheel */
+    /* D-Pad (Left Side) - Reverted to original 320px size */
     .dpad-container {
         position: relative;
         width: 80vmin;
@@ -99,7 +100,7 @@
     #down  { clip-path: polygon(98% 100%, 2% 100%, 50% 52%); }
     #left  { clip-path: polygon(0 98%, 0 2%, 48% 50%); }
 
-    /* Text centering inside the clipped triangles */
+    /* Text centering inside the clipped triangles - Reverted to original 32px */
     .dpad-segment span {
         position: absolute;
         font-size: 32px;
@@ -176,11 +177,6 @@
         </div>
 
         <div class="form-group">
-            <label>Appearance ID (Number)</label>
-            <input type="number" id="input-avatar" placeholder="0" min="0" max="99">
-        </div>
-
-        <div class="form-group">
             <button class="save-btn fullscreen-btn" onclick="toggleFullScreen()">Toggle Fullscreen</button>
         </div>
 
@@ -191,14 +187,12 @@
     // --- STATE MANAGEMENT ---
     let state = {
         id: localStorage.getItem("pid") || "P" + Math.floor(Math.random() * 1000),
-        name: localStorage.getItem("pname") || "Player",
-        avatar: localStorage.getItem("pavatar") || "1"
+        name: localStorage.getItem("pname") || "Player"
     };
     
     localStorage.setItem("pid", state.id);
 
     document.getElementById("input-name").value = state.name;
-    document.getElementById("input-avatar").value = state.avatar;
 
     // --- WEBSOCKET CONNECTION ---
     const host = window.location.hostname; 
@@ -217,7 +211,7 @@
 
     function sendConfig() {
         if (socket.readyState === WebSocket.OPEN) {
-            socket.send(JSON.stringify({ type: "config", id: state.id, name: state.name, avatar: parseInt(state.avatar) }));
+            socket.send(JSON.stringify({ type: "config", id: state.id, name: state.name }));
         }
     }
 
@@ -243,10 +237,8 @@
 
     function saveSettings() {
         state.name = document.getElementById("input-name").value || "Player";
-        state.avatar = document.getElementById("input-avatar").value || "1";
 
         localStorage.setItem("pname", state.name);
-        localStorage.setItem("pavatar", state.avatar);
 
         sendConfig();
         toggleSettings();

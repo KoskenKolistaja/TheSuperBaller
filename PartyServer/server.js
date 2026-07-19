@@ -6,8 +6,8 @@ const path = require('path');
 
 // --- 1. PYTHONIN KORVAAMINEN (HTTP-palvelin portille 8000) ---
 const httpServer = http.createServer((req, res) => {
-    // Tarjoillaan controller.html riippumatta siitä, mitä polkua puhelin pyytää
-    fs.readFile(path.join(__dirname, 'controller.html'), (err, content) => {
+    const htmlPath = path.join(path.dirname(process.execPath), 'controller.html');
+    fs.readFile(htmlPath, (err, content) => {
         if (err) {
             res.writeHead(500);
             res.end("Virhe ladattaessa ohjainsivua.");
@@ -32,15 +32,17 @@ const tcpServer = net.createServer((socket) => {
     console.log("🎮 Godot yhdistetty TCP:n kautta");
     godotClient = socket;
 
+    // When Godot disconnects gracefully OR forcefully
     socket.on('end', () => {
-        console.log("🎮 Godot katkaisi yhteyden");
-        godotClient = null;
+        console.log("🎮 Godot katkaisi yhteyden. Suljetaan serveri.");
+        process.exit(0); // Kills the Node server immediately
     });
-    socket.on('error', () => { godotClient = null; });
-});
-
-tcpServer.listen(9000, () => {
-    console.log("🟢 TCP-palvelin Godotille portissa 9000");
+    
+    // When Godot crashes or the connection drops abruptly
+    socket.on('error', () => { 
+        console.log("🎮 Yhteys Godotiin katkesi odottamatta. Suljetaan serveri.");
+        process.exit(0); 
+    });
 });
 
 // Kun puhelin ottaa yhteyden WebSocketilla
@@ -54,4 +56,9 @@ wss.on('connection', function connection(ws) {
             godotClient.write(msg + "\n");
         }
     });
+});
+
+// LISÄÄ TÄMÄ PUUTTUUVA OSA:
+tcpServer.listen(9000, () => {
+    console.log("🟢 TCP-palvelin Godotille portissa 9000");
 });

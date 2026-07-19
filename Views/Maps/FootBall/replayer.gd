@@ -147,6 +147,9 @@ func interpolate_entities(t: float):
 		ball_instance.global_rotation = blended_quat.get_euler()
 
 
+func stop_replay():
+	cleanup_replay()
+
 func cleanup_replay():
 	playing = false
 	dictionaries.clear()

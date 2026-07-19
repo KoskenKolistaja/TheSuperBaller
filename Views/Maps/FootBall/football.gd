@@ -6,7 +6,7 @@ extends Node3D
 signal shortcut
 
 var match_number = 0
-var match_time = 10
+var match_time = 120
 var winner_dictionary = {}
 
 var left_team_score : int = 0

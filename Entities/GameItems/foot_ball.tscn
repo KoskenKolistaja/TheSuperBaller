@@ -74,6 +74,7 @@ top_level = true
 [node name="PlayerNameLabel" type="Label3D" parent="LabelPivot" unique_id=1793282806]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4673326, 0)
+visible = false
 billboard = 1
 text = "Don Simeon"
 font_size = 200

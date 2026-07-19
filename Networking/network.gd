@@ -7,16 +7,52 @@ var port := 9000
 var tcp := StreamPeerTCP.new()
 var buffer := ""
 
+var reconnect_timer := 0.0
+const RECONNECT_INTERVAL := 1.0 # Try connecting every 1 second
+
 # Dictionary to store connected players info
 # Format: { "P123": { "name": "CoolGuy", "avatar": 1 } }
 var players = {}
 
 @export var input_parser : Node
 
+var server_pid = -1
+
 
 func _ready():
 	self.add_to_group("network")
+	start_local_server()
 	connect_to_server()
+
+
+
+
+
+func start_local_server():
+	var exe_dir = OS.get_executable_path().get_base_dir()
+	var server_path = exe_dir + "/server.exe"
+	
+	# Fallback for testing inside the Godot Editor
+	if OS.has_feature("editor"):
+		server_path = ProjectSettings.globalize_path("res://PartyServer/server.exe")
+	
+	print("Starting local server at: ", server_path)
+	
+	# Launch the executable silently in the background
+	server_pid = OS.create_process(server_path, [])
+	
+	if server_pid == -1:
+		push_error("Failed to start server.exe")
+
+# Ensure the server closes when the Godot game is closed
+func _notification(what):
+	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		if server_pid > 0:
+			print("Shutting down local server...")
+			OS.kill(server_pid)
+
+
+
 
 func connect_to_server():
 	print("🔗 Attempting connection to ", host, ":", port)
@@ -24,15 +60,19 @@ func connect_to_server():
 	if err != OK:
 		print("❌ Failed to initialize connection.")
 
-func _process(_delta):
+func _process(delta):
 	tcp.poll()
 	var status = tcp.get_status()
 	
 	if status == StreamPeerTCP.STATUS_CONNECTED:
 		_check_for_messages()
+	
 	elif status == StreamPeerTCP.STATUS_NONE or status == StreamPeerTCP.STATUS_ERROR:
-		# Simple reconnect logic could go here
-		pass
+		# The server isn't ready yet, or crashed. Let's retry!
+		reconnect_timer -= delta
+		if reconnect_timer <= 0.0:
+			reconnect_timer = RECONNECT_INTERVAL
+			connect_to_server()
 
 func _check_for_messages():
 	var available_bytes = tcp.get_available_bytes()
@@ -88,7 +128,7 @@ func _handle_json_command(json_str: String):
 		var key = data.get("key")
 		var event_type = data.get("event") # "down" or "up"
 
-		print("🎮 Input: ", player_id, " | Key: ", key, " | ", event_type)
+		#print("🎮 Input: ", player_id, " | Key: ", key, " | ", event_type)
 		
 		_route_input_to_game(player_id, key, event_type)
 
@@ -96,7 +136,6 @@ func _handle_json_command(json_str: String):
 
 
 func _route_input_to_game(player_id, key, event_type):
-	print("TÄÄLLÄ SITÄ OLLAAN")
 	# 1. Forward to your custom input parser
 	if input_parser:
 		input_parser.forward_player_input(player_id, key, event_type)
@@ -105,14 +144,14 @@ func _route_input_to_game(player_id, key, event_type):
 		return
 	
 	# 2. Debug printing (Preserved from your code)
-	if key == "A" and event_type == "down":
-		print(player_id, " Just Jumped!")
+	#if key == "A" and event_type == "down":
+		#print(player_id, " Just Jumped!")
 	
-	if key == "B" and event_type == "down":
-		print(player_id, " Just used action!")
+	#if key == "B" and event_type == "down":
+		#print(player_id, " Just used action!")
 	
-	if key == "LEFT":
-		if event_type == "down":
-			print(player_id, " moving left")
-		else:
-			print(player_id, " stopped moving left")
+	#if key == "LEFT":
+		#if event_type == "down":
+			#print(player_id, " moving left")
+		#else:
+			#print(player_id, " stopped moving left")

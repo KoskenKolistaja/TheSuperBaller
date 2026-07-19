@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bamsdts2akal7" path="res://Entities/Props/player_prop_face.gd" id="1_w8ax7"]
 [ext_resource type="Script" uid="uid://dajdsjmfavufd" path="res://Entities/Replay/replay_player.gd" id="1_yw8u3"]
 [ext_resource type="Script" uid="uid://bux2eacob72ge" path="res://Entities/Props/hat_slot.gd" id="2_yw8u3"]
+[ext_resource type="FontFile" uid="uid://drhxr2u1mcy6o" path="res://Assets/Fonts/Showpop.ttf" id="4_s54h5"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sb64x"]
 resource_name = "Material.001"
@@ -493,8 +494,9 @@ autoplay = &"Idle"
 
 [node name="NameLabel" type="Label3D" parent="." unique_id=473303346]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.7385173, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5920644, 0)
 layers = 257
 billboard = 1
 text = "Andrea"
+font = ExtResource("4_s54h5")
 font_size = 128
