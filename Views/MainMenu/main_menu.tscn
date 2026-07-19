@@ -533,6 +533,7 @@ value = 100.0
 
 [node name="IPLabel" type="Label" parent="." unique_id=899721886]
 unique_name_in_owner = true
+visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0

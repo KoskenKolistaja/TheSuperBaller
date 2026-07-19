@@ -14,7 +14,7 @@ func update_animation_speed(new_speed):
 
 func show_name():
 	%NameLabel.text = name
-	%NameLabel.show()
+	#%NameLabel.show()
 
 func hide_name():
 	%NameLabel.text = name
